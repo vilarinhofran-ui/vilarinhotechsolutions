@@ -17,6 +17,8 @@ const adminName = document.getElementById("admin-name");
 const adminType = document.getElementById("admin-type");
 const adminDescription = document.getElementById("admin-description");
 const adminUrl = document.getElementById("admin-url");
+const adminCoverUrl = document.getElementById("admin-cover-url");
+const adminAutofillUrlButton = document.getElementById("admin-autofill-url");
 const adminFeedback = document.getElementById("admin-feedback");
 const adminProjectFields = document.getElementById("admin-project-fields");
 const adminSection = document.getElementById("admin");
@@ -32,8 +34,14 @@ const supabaseStatus = document.getElementById("supabase-status");
 const adminGoogleLoginButton = document.getElementById("admin-google-login");
 const adminGoogleLogoutButton = document.getElementById("admin-google-logout");
 const adminAuthStatus = document.getElementById("admin-auth-status");
+const connectGithubButton = document.getElementById("connect-github");
+const connectNetlifyButton = document.getElementById("connect-netlify");
+const externalConnectStatus = document.getElementById(
+  "external-connect-status",
+);
 
 const storageKey = "vts_public_projects";
+const projectCoversKey = "vts_project_covers";
 const supabaseConfigKey = "vts_supabase_config";
 let supabaseClient = null;
 let isAuthorizedAdmin = false;
@@ -119,11 +127,18 @@ function setAuthStatus(message) {
   }
 }
 
+function setExternalConnectStatus(message) {
+  if (externalConnectStatus) {
+    externalConnectStatus.textContent = message;
+  }
+}
+
 function setAdminAccess(enabled) {
   isAuthorizedAdmin = enabled;
 
-  if (adminSection) {
-    adminSection.hidden = !enabled;
+  if (adminAuthStatus) {
+    adminAuthStatus.classList.toggle("is-authorized", enabled);
+    adminAuthStatus.classList.toggle("is-locked", !enabled);
   }
 
   if (adminProjectFields) {
@@ -137,6 +152,35 @@ function setAdminAccess(enabled) {
   if (adminGoogleLoginButton) {
     adminGoogleLoginButton.hidden = enabled;
   }
+}
+
+function openAdminPanel() {
+  if (!adminSection) {
+    return;
+  }
+
+  adminSection.hidden = false;
+  window.location.hash = "admin";
+  adminSection.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function openExternalPlatformLogin(provider) {
+  const targets = {
+    github: "https://github.com/login",
+    netlify: "https://app.netlify.com/login",
+  };
+
+  const url = targets[provider];
+  if (!url) {
+    return;
+  }
+
+  window.open(url, "_blank", "noopener,noreferrer");
+
+  const label = provider === "github" ? "GitHub" : "Netlify";
+  setExternalConnectStatus(
+    `${label} aberto. Depois cole a URL do projeto e clique em "Sincronizar URLs no portfolio".`,
+  );
 }
 
 function setSyncFeedback(message) {
@@ -161,6 +205,24 @@ function getStoredProjects() {
 
 function saveProjects(projects) {
   localStorage.setItem(storageKey, JSON.stringify(projects));
+}
+
+function getStoredProjectCovers() {
+  const raw = localStorage.getItem(projectCoversKey);
+  if (!raw) {
+    return {};
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveStoredProjectCovers(map) {
+  localStorage.setItem(projectCoversKey, JSON.stringify(map));
 }
 
 function normalizeUrl(url) {
@@ -191,6 +253,54 @@ function projectFingerprint(project) {
     .trim()
     .toLowerCase();
   return `name:${name}|type:${type}`;
+}
+
+function getProjectCoverUrl(project) {
+  const explicitCover = String(
+    project.coverUrl || project.cover_url || "",
+  ).trim();
+  if (explicitCover) {
+    return explicitCover;
+  }
+
+  const normalizedUrl = normalizeUrl(project.url || "");
+  if (!normalizedUrl) {
+    return "assets/logo_.jpg";
+  }
+
+  return `https://image.thum.io/get/width/1200/crop/700/noanimate/${encodeURI(normalizedUrl)}`;
+}
+
+function attachStoredCovers(projects) {
+  const coverMap = getStoredProjectCovers();
+  return projects.map((project) => {
+    const key = projectFingerprint(project);
+    const mappedCover = String(coverMap[key] || "").trim();
+    if (!mappedCover) {
+      return project;
+    }
+
+    return {
+      ...project,
+      coverUrl: mappedCover,
+    };
+  });
+}
+
+function saveProjectCover(project, coverUrl) {
+  const trimmed = String(coverUrl || "").trim();
+  if (!trimmed) {
+    return;
+  }
+
+  const key = projectFingerprint(project);
+  if (!key) {
+    return;
+  }
+
+  const current = getStoredProjectCovers();
+  current[key] = trimmed;
+  saveStoredProjectCovers(current);
 }
 
 function dedupeProjects(projects) {
@@ -319,6 +429,12 @@ async function logoutAdmin() {
 async function handleAdminLoginTrigger(event) {
   event.preventDefault();
 
+  openAdminPanel();
+
+  if (isAuthorizedAdmin) {
+    return;
+  }
+
   if (!supabaseClient) {
     const config = getSupabaseConfig();
 
@@ -383,6 +499,54 @@ function buildProjectFromUrl(urlString) {
     url: normalized,
     is_published: true,
   };
+}
+
+function buildDescriptionFromType(type) {
+  const map = {
+    "Landing Page": "Pagina focada em captacao de leads e conversao.",
+    "Site Institucional":
+      "Site institucional para apresentar a empresa com autoridade.",
+    "E-commerce": "Loja virtual com vitrine, carrinho e checkout.",
+    "Sistema Web": "Sistema para operacao interna com painel e controle.",
+    "Plataforma SaaS": "Plataforma digital com area logada e assinaturas.",
+    Marketplace: "Plataforma com multiplos vendedores e gestao central.",
+  };
+
+  return map[type] || "Projeto digital publicado no portfolio.";
+}
+
+function fillProjectFieldsFromUrl() {
+  const rawUrl = String(adminUrl?.value || "").trim();
+  if (!rawUrl) {
+    adminFeedback.textContent =
+      "Informe uma URL do projeto para preencher automaticamente.";
+    return;
+  }
+
+  const normalizedUrl = normalizeUrl(rawUrl);
+  const inferredType = inferProjectTypeFromUrl(normalizedUrl);
+  const inferredName = inferProjectNameFromUrl(rawUrl);
+
+  if (adminName && !adminName.value.trim()) {
+    adminName.value = inferredName;
+  }
+
+  if (adminType && !adminType.value.trim()) {
+    adminType.value = inferredType;
+  }
+
+  if (adminDescription && !adminDescription.value.trim()) {
+    adminDescription.value = buildDescriptionFromType(
+      adminType?.value || inferredType,
+    );
+  }
+
+  if (adminCoverUrl && !adminCoverUrl.value.trim()) {
+    adminCoverUrl.value = getProjectCoverUrl({ url: normalizedUrl });
+  }
+
+  adminFeedback.textContent =
+    "Campos preenchidos automaticamente. Revise e publique.";
 }
 
 async function syncProjectsByUrls() {
@@ -472,26 +636,78 @@ async function syncProjectsByUrls() {
 }
 
 function createProjectCard(project) {
-  const card = document.createElement("a");
+  const card = document.createElement("article");
+  const cover = document.createElement("img");
+  const content = document.createElement("div");
   const title = document.createElement("h3");
   const description = document.createElement("p");
+  const actions = document.createElement("div");
+  const viewButton = document.createElement(project.url ? "a" : "span");
 
   card.className = "project-card";
+  content.className = "project-content";
+  actions.className = "project-actions";
+  cover.className = "project-cover";
+  cover.loading = "lazy";
+  cover.decoding = "async";
+  cover.src = getProjectCoverUrl(project);
+  cover.alt = `Capa do projeto ${project.name}`;
+
   title.textContent = project.name;
   description.textContent = `${project.type} • ${project.description}`;
+  viewButton.className = "btn btn-sm btn-ghost project-link";
+  viewButton.textContent = project.url ? "Ver projeto" : "Sem link";
 
   if (project.url) {
-    card.href = project.url;
-    card.target = "_blank";
-    card.rel = "noreferrer";
+    viewButton.href = project.url;
+    viewButton.target = "_blank";
+    viewButton.rel = "noreferrer";
   } else {
-    card.href = "#portfolio";
-    card.setAttribute("aria-disabled", "true");
+    viewButton.setAttribute("aria-disabled", "true");
   }
 
-  card.appendChild(title);
-  card.appendChild(description);
+  actions.appendChild(viewButton);
+  content.appendChild(title);
+  content.appendChild(description);
+  content.appendChild(actions);
+  card.appendChild(cover);
+  card.appendChild(content);
   return card;
+}
+
+function setupPortfolioMarquee() {
+  if (!portfolioGrid) {
+    return;
+  }
+
+  portfolioGrid.classList.remove("is-marquee");
+  portfolioGrid.style.removeProperty("--marquee-duration");
+
+  portfolioGrid.querySelectorAll(".project-card.is-clone").forEach((clone) => {
+    clone.remove();
+  });
+
+  const originals = Array.from(portfolioGrid.querySelectorAll(".project-card"));
+  if (originals.length < 2) {
+    return;
+  }
+
+  originals.forEach((card) => {
+    const clone = card.cloneNode(true);
+    clone.classList.add("is-clone");
+    clone.setAttribute("aria-hidden", "true");
+
+    clone.querySelectorAll("a").forEach((link) => {
+      link.setAttribute("tabindex", "-1");
+      link.setAttribute("aria-hidden", "true");
+    });
+
+    portfolioGrid.appendChild(clone);
+  });
+
+  const duration = Math.max(20, originals.length * 6);
+  portfolioGrid.style.setProperty("--marquee-duration", `${duration}s`);
+  portfolioGrid.classList.add("is-marquee");
 }
 
 function renderPortfolioCards(projects) {
@@ -503,6 +719,8 @@ function renderPortfolioCards(projects) {
   projects.forEach((project) => {
     portfolioGrid.appendChild(createProjectCard(project));
   });
+
+  setupPortfolioMarquee();
 }
 
 async function renderPortfolio() {
@@ -514,13 +732,17 @@ async function renderPortfolio() {
       .order("created_at", { ascending: false });
 
     if (!error && data) {
-      renderPortfolioCards(dedupeProjects([...defaultProjects, ...data]));
+      renderPortfolioCards(
+        attachStoredCovers(dedupeProjects([...defaultProjects, ...data])),
+      );
       return;
     }
   }
 
   renderPortfolioCards(
-    dedupeProjects([...defaultProjects, ...getStoredProjects()]),
+    attachStoredCovers(
+      dedupeProjects([...defaultProjects, ...getStoredProjects()]),
+    ),
   );
 }
 
@@ -563,14 +785,19 @@ async function handleAdminSubmit(event) {
     return;
   }
 
-  const name = adminName.value.trim();
-  const type = adminType.value.trim();
-  const description = adminDescription.value.trim();
+  const providedName = adminName.value.trim();
+  const providedType = adminType.value.trim();
+  const providedDescription = adminDescription.value.trim();
   const url = normalizeUrl(adminUrl.value.trim());
+  const coverUrl = String(adminCoverUrl?.value || "").trim();
+
+  const type = providedType || (url ? inferProjectTypeFromUrl(url) : "");
+  const name = providedName || (url ? inferProjectNameFromUrl(url) : "");
+  const description = providedDescription || buildDescriptionFromType(type);
 
   if (!name || !type || !description) {
     adminFeedback.textContent =
-      "Preencha nome, tipo e descricao para publicar.";
+      "Informe ao menos a URL do projeto ou preencha nome, tipo e descricao.";
     return;
   }
 
@@ -602,6 +829,7 @@ async function handleAdminSubmit(event) {
       return;
     }
 
+    saveProjectCover({ name, type, url }, coverUrl);
     await renderPortfolio();
     adminProjectForm.reset();
     adminFeedback.textContent =
@@ -611,7 +839,7 @@ async function handleAdminSubmit(event) {
 
   const projects = getStoredProjects();
   const next = dedupeProjects([
-    { name, type, description, url, is_published: true },
+    { name, type, description, url, coverUrl, is_published: true },
     ...projects,
   ]);
 
@@ -622,6 +850,7 @@ async function handleAdminSubmit(event) {
   }
 
   saveProjects(next);
+  saveProjectCover({ name, type, url }, coverUrl);
   await renderPortfolio();
 
   adminProjectForm.reset();
@@ -704,6 +933,10 @@ function setupInputRedirects() {
 }
 
 async function setupSupabase() {
+  if (window.location.hash === "#admin") {
+    openAdminPanel();
+  }
+
   const config = getSupabaseConfig();
 
   if (config) {
@@ -775,6 +1008,22 @@ if (adminLoginTriggers.length) {
 
 if (syncUrlsButton) {
   syncUrlsButton.addEventListener("click", syncProjectsByUrls);
+}
+
+if (adminAutofillUrlButton) {
+  adminAutofillUrlButton.addEventListener("click", fillProjectFieldsFromUrl);
+}
+
+if (connectGithubButton) {
+  connectGithubButton.addEventListener("click", () => {
+    openExternalPlatformLogin("github");
+  });
+}
+
+if (connectNetlifyButton) {
+  connectNetlifyButton.addEventListener("click", () => {
+    openExternalPlatformLogin("netlify");
+  });
 }
 
 setupMenu();

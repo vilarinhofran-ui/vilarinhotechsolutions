@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#081632"/>
+      <stop offset="1" stop-color="#0B3E8A"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#bg)"/>
+  <rect x="56" y="52" width="688" height="376" rx="24" fill="#081129" stroke="#2F76E0"/>
+  <rect x="92" y="88" width="616" height="48" rx="12" fill="#123A7B"/>
+  <rect x="112" y="176" width="176" height="194" rx="16" fill="#0B2357" stroke="#3A80E6"/>
+  <rect x="312" y="176" width="176" height="194" rx="16" fill="#0B2357" stroke="#3A80E6"/>
+  <rect x="512" y="176" width="176" height="194" rx="16" fill="#0B2357" stroke="#3A80E6"/>
+  <text x="144" y="224" fill="#B9D5FF" font-size="20" font-family="Arial, sans-serif">Básico</text>
+  <text x="344" y="224" fill="#B9D5FF" font-size="20" font-family="Arial, sans-serif">Pro</text>
+  <text x="544" y="224" fill="#B9D5FF" font-size="20" font-family="Arial, sans-serif">Scale</text>
+  <text x="94" y="408" fill="#D9E8FF" font-size="30" font-family="Arial, sans-serif">Plataforma SaaS</text>
+</svg>

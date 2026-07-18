@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D1F4B"/>
+      <stop offset="1" stop-color="#0A3B8E"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#bg)"/>
+  <rect x="56" y="56" width="688" height="368" rx="26" fill="#0A1535" stroke="#2A5FBD" stroke-width="2"/>
+  <circle cx="170" cy="164" r="42" fill="#1F72FF"/>
+  <rect x="240" y="134" width="320" height="18" rx="9" fill="#9FC6FF"/>
+  <rect x="240" y="168" width="220" height="14" rx="7" fill="#77A8F5"/>
+  <rect x="112" y="250" width="230" height="56" rx="14" fill="#00E5FF" fill-opacity="0.22" stroke="#00E5FF"/>
+  <rect x="362" y="250" width="160" height="56" rx="14" fill="#1F72FF" fill-opacity="0.28"/>
+  <rect x="542" y="250" width="146" height="56" rx="14" fill="#22C55E" fill-opacity="0.28"/>
+  <text x="112" y="344" fill="#CFE2FF" font-size="30" font-family="Arial, sans-serif">Cartão Digital</text>
+</svg>

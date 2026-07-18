@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1734"/>
+      <stop offset="1" stop-color="#0A3E88"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#bg)"/>
+  <rect x="60" y="52" width="680" height="376" rx="24" fill="#081027" stroke="#2E73DC"/>
+  <rect x="96" y="94" width="606" height="44" rx="12" fill="#123978"/>
+  <rect x="112" y="108" width="144" height="16" rx="8" fill="#A9CBFF"/>
+  <rect x="96" y="164" width="188" height="214" rx="16" fill="#0B2357"/>
+  <rect x="304" y="164" width="188" height="214" rx="16" fill="#0B2357"/>
+  <rect x="512" y="164" width="188" height="214" rx="16" fill="#0B2357"/>
+  <circle cx="190" cy="236" r="36" fill="#00E5FF" fill-opacity="0.2"/>
+  <circle cx="398" cy="236" r="36" fill="#00E5FF" fill-opacity="0.2"/>
+  <circle cx="606" cy="236" r="36" fill="#00E5FF" fill-opacity="0.2"/>
+  <text x="96" y="408" fill="#D9E8FF" font-size="30" font-family="Arial, sans-serif">E-commerce</text>
+</svg>

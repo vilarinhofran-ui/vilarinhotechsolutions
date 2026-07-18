@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#091533"/>
+      <stop offset="1" stop-color="#0A3E8B"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#bg)"/>
+  <rect x="58" y="52" width="684" height="376" rx="24" fill="#081028" stroke="#2F74DD"/>
+  <rect x="98" y="92" width="604" height="44" rx="12" fill="#123A7B"/>
+  <rect x="100" y="162" width="188" height="230" rx="16" fill="#0B2357"/>
+  <rect x="308" y="162" width="394" height="108" rx="16" fill="#0B2357"/>
+  <rect x="308" y="284" width="186" height="108" rx="16" fill="#0B2357"/>
+  <rect x="516" y="284" width="186" height="108" rx="16" fill="#0B2357"/>
+  <rect x="120" y="182" width="148" height="18" rx="9" fill="#7CADF2"/>
+  <rect x="120" y="214" width="120" height="14" rx="7" fill="#5E96E8"/>
+  <rect x="328" y="184" width="154" height="16" rx="8" fill="#7CADF2"/>
+  <text x="98" y="408" fill="#D9E8FF" font-size="30" font-family="Arial, sans-serif">Sistema Web</text>
+</svg>

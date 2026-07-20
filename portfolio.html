@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfólio | Vilarinho Tech Solutions</title>
+    <meta
+      name="description"
+      content="Portfólio comercial da Vilarinho Tech Solutions com cases que geram autoridade, conversão e crescimento digital."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=Orbitron:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/jpeg" href="assets/logo_.jpg" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .pf-main {
+        --pf-radius: 18px;
+      }
+
+      .pf-main {
+        padding: 38px 0 72px;
+      }
+
+      .pf-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 95;
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(10px);
+        background: var(--topbar-bg);
+      }
+
+      .pf-topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 12px 0;
+      }
+
+      .pf-nav {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .pf-nav a:hover {
+        color: var(--brand);
+      }
+
+      .pf-hero {
+        margin-top: 12px;
+      }
+
+      .pf-hero-layout {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);
+        gap: 20px;
+        align-items: center;
+      }
+
+      .pf-hero-media-wrap {
+        border: 1px solid var(--line);
+        border-radius: var(--pf-radius);
+        padding: 10px;
+        width: min(560px, 100%);
+        justify-self: start;
+        background: color-mix(in srgb, var(--card) 88%, #123f86 12%);
+        box-shadow: 0 20px 40px rgba(2, 12, 36, 0.34);
+      }
+
+      .pf-hero-media {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        height: auto;
+        border-radius: 12px;
+        display: block;
+        object-fit: cover;
+        object-position: center 22%;
+        filter: contrast(1.03) saturate(1.04);
+        transform: translateY(var(--parallax-shift, 0px));
+      }
+
+      .pf-hero-copy {
+        display: grid;
+        gap: 10px;
+      }
+
+      .pf-headline {
+        max-width: 18ch;
+        margin: 0;
+      }
+
+      .pf-highlight-row {
+        margin-top: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .pf-highlight {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 11px;
+        background: color-mix(in srgb, var(--card) 84%, #123f86 16%);
+        color: color-mix(in srgb, var(--text) 92%, #9cc9ff 8%);
+        font-size: 0.84rem;
+        font-weight: 600;
+      }
+
+      .pf-actions {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .pf-subtitle {
+        color: color-mix(in srgb, var(--text) 80%, #7099dd 20%);
+        max-width: 72ch;
+      }
+
+      .pf-grid-wrap {
+        margin-top: 22px;
+        border: 1px solid var(--line);
+        border-radius: var(--pf-radius);
+        background:
+          radial-gradient(
+            circle at 10% 0%,
+            rgba(100, 175, 255, 0.22),
+            transparent 38%
+          ),
+          radial-gradient(
+            circle at 90% 100%,
+            rgba(19, 133, 255, 0.2),
+            transparent 40%
+          ),
+          color-mix(in srgb, var(--card) 90%, #0d3678 10%);
+        padding: 14px;
+      }
+
+      .pf-toolbar {
+        display: grid;
+        grid-template-columns: 1.2fr minmax(160px, 0.5fr) auto;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .pf-input,
+      .pf-select {
+        width: 100%;
+        height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0 12px;
+        background: color-mix(in srgb, var(--card) 92%, #0e2d62 8%);
+        color: var(--text);
+        font: inherit;
+      }
+
+      .pf-input::placeholder {
+        color: color-mix(in srgb, var(--muted) 82%, #8eb6ef 18%);
+      }
+
+      .pf-input:focus,
+      .pf-select:focus {
+        outline: none;
+        border-color: color-mix(in srgb, var(--brand) 62%, var(--line) 38%);
+        box-shadow: 0 0 0 3px rgba(84, 158, 255, 0.18);
+      }
+
+      .pf-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 12px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: color-mix(in srgb, #05132f 82%, transparent 18%);
+        color: color-mix(in srgb, #f3f7ff 90%, var(--accent) 10%);
+        font-size: 0.86rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .pf-card {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: color-mix(in srgb, var(--card) 92%, #0f3d8a 8%);
+        overflow: hidden;
+        box-shadow: 0 12px 24px rgba(0, 12, 40, 0.28);
+        transform: translate3d(
+            calc(var(--nx, 0px) + var(--hx, 0px)),
+            calc(var(--ny, 0px) + var(--hy, 0px)),
+            0
+          )
+          rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+          scale(var(--scale, 1));
+        transition:
+          transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.28s ease,
+          border-color 0.28s ease,
+          opacity 0.28s ease,
+          filter 0.28s ease;
+        will-change: transform;
+        position: relative;
+      }
+
+      .pf-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(
+          340px circle at var(--mx, 50%) var(--my, 50%),
+          rgba(116, 186, 255, 0.24),
+          transparent 62%
+        );
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .pf-card:hover,
+      .pf-card:focus-within,
+      .pf-card.is-active {
+        opacity: 1;
+        border-color: color-mix(in srgb, var(--brand) 64%, var(--line) 36%);
+        box-shadow:
+          calc(var(--shadow-x, 0px) * 1) calc(18px + var(--shadow-y, 0px)) 34px
+            rgba(0, 20, 56, 0.42),
+          0 0 0 1px rgba(119, 183, 255, 0.24);
+        filter: saturate(1.06);
+      }
+
+      .reveal-item {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.62s ease,
+          transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+      }
+
+      .reveal-item.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .pf-card:hover::after,
+      .pf-card:focus-within::after,
+      .pf-card.is-active::after {
+        opacity: 1;
+      }
+
+      .pf-card img {
+        width: 100%;
+        height: 168px;
+        object-fit: cover;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .pf-card-body {
+        padding: 12px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .pf-card-body h3 {
+        margin: 0;
+        font-size: 1.02rem;
+        line-height: 1.35;
+      }
+
+      .pf-pill {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 6px 10px;
+        border: 1px solid var(--line);
+        background: color-mix(in srgb, #05122f 88%, transparent 12%);
+        color: color-mix(in srgb, #f3f8ff 90%, var(--accent) 10%);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      html[data-theme="light"] .pf-pill {
+        background: #f0f6ff;
+        border-color: #c7d8ef;
+        color: #1f3e66;
+      }
+
+      .pf-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .pf-card-footer {
+        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+      }
+
+      .pf-domain {
+        color: color-mix(in srgb, var(--text) 68%, #84b7f6 32%);
+        font-size: 0.78rem;
+      }
+
+      .pf-empty {
+        border: 1px dashed color-mix(in srgb, var(--line) 72%, #73afff 28%);
+        border-radius: 14px;
+        padding: 24px;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      .pf-grid {
+        margin-top: 6px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        perspective: 1100px;
+      }
+
+      .pf-grid.is-interacting .pf-card {
+        opacity: 0.72;
+        filter: saturate(0.82);
+      }
+
+      .pf-grid.is-interacting .pf-card.is-active {
+        opacity: 1;
+        filter: saturate(1.08);
+      }
+
+      .pf-grid .pf-card {
+        width: auto;
+      }
+
+      @media (max-width: 980px) {
+        .pf-hero-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .pf-hero-media-wrap {
+          justify-self: center;
+          width: min(500px, 100%);
+        }
+
+        .pf-hero-media {
+          aspect-ratio: 5 / 6;
+          object-position: center 18%;
+        }
+
+        .pf-toolbar {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .pf-count {
+          grid-column: span 2;
+          justify-content: flex-start;
+        }
+
+        .pf-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 760px) {
+        .pf-topbar-inner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .pf-toolbar {
+          grid-template-columns: 1fr;
+        }
+
+        .pf-count {
+          grid-column: auto;
+        }
+
+        .pf-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal-item {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+
+        .pf-hero-media {
+          transform: none;
+        }
+
+        .pf-card {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="pf-topbar">
+      <div class="container pf-topbar-inner">
+        <a class="brand" href="index.html#inicio">
+          <img src="assets/logo_.jpg" alt="Vilarinho Tech Solutions" />
+          <span>Vilarinho Tech Solutions</span>
+        </a>
+
+        <nav class="pf-nav" aria-label="Navegação do portfólio">
+          <a href="index.html#inicio">Início</a>
+          <a href="#projetos">Projetos</a>
+          <a href="index.html#contato">Contato</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="pf-main">
+      <section class="container pf-hero" id="inicio-portfolio">
+        <div class="pf-hero-layout">
+          <div class="pf-hero-media-wrap reveal-item">
+            <img
+              class="pf-hero-media"
+              src="assets/3463CL87854.JPG"
+              alt="Francielly Vilarinho em retrato profissional"
+              data-parallax="hero-media"
+              onerror="
+                this.onerror = null;
+                this.src = 'assets/logo_.jpg';
+              "
+            />
+          </div>
+
+          <div class="pf-hero-copy reveal-item" style="--reveal-delay: 90ms">
+            <p class="section-label">Portfólio</p>
+            <h1 class="pf-headline">
+              Projetos que fortalecem marca e aceleram vendas
+            </h1>
+            <p class="pf-subtitle">
+              Cada case abaixo foi desenhado para gerar percepção de valor,
+              aumentar autoridade digital e criar oportunidades reais de
+              negócio.
+            </p>
+
+            <div
+              class="pf-highlight-row"
+              aria-label="Diferenciais do portfólio"
+            >
+              <span class="pf-highlight">Posicionamento premium</span>
+              <span class="pf-highlight">Performance comercial</span>
+              <span class="pf-highlight">Experiência que converte</span>
+            </div>
+
+            <div class="pf-actions">
+              <a class="btn" href="#projetos">Ver Cases Estratégicos</a>
+              <a class="btn btn-ghost" href="index.html#contato"
+                >Quero um projeto assim</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container section reveal-item" id="projetos">
+        <p class="section-label">Projetos</p>
+        <h2>Cases prontos para inspirar seu próximo crescimento</h2>
+        <p class="pf-subtitle">
+          Role a página e acompanhe os projetos surgindo com transição suave.
+          Passe o mouse para sentir o efeito 3D e comparar os diferenciais de
+          cada entrega.
+        </p>
+        <div class="pf-grid-wrap">
+          <div
+            class="pf-toolbar"
+            role="search"
+            aria-label="Busca e filtros de projetos"
+          >
+            <input
+              class="pf-input"
+              id="pf-search"
+              type="search"
+              placeholder="Busque por case, solução ou objetivo"
+              autocomplete="off"
+            />
+            <select
+              class="pf-select"
+              id="pf-filter"
+              aria-label="Filtrar por tipo de projeto"
+            ></select>
+            <div class="pf-count" id="pf-count" aria-live="polite">
+              0 projetos
+            </div>
+          </div>
+          <div class="pf-grid" id="pf-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const STORAGE_KEY = "vts_public_projects";
+      const SUPABASE_CONFIG_KEY = "vts_supabase_config";
+      let revealObserver;
+      let autoCardTimer = null;
+      let autoResumeTimer = null;
+      let supabaseClient = null;
+      let supabaseRealtimeChannel = null;
+
+      const defaultProjects = [
+        {
+          name: "Cartao Digital",
+          type: "Cartao Digital",
+          description: "Perfil + botoes + WhatsApp para contato rapido.",
+          url: "",
+        },
+        {
+          name: "Landing Page",
+          type: "Landing Page",
+          description: "Headline + oferta + CTA para captacao de leads.",
+          url: "",
+        },
+        {
+          name: "Site Institucional",
+          type: "Site Institucional",
+          description: "Home + sobre + contato para autoridade da marca.",
+          url: "",
+        },
+        {
+          name: "E-commerce",
+          type: "E-commerce",
+          description: "Vitrine + carrinho + checkout para vendas online.",
+          url: "",
+        },
+        {
+          name: "Sistema Web",
+          type: "Sistema Web",
+          description: "Dashboard + processos + relatorios para produtividade.",
+          url: "",
+        },
+        {
+          name: "Plataforma SaaS",
+          type: "Plataforma SaaS",
+          description:
+            "Assinatura + area logada para produto digital recorrente.",
+          url: "",
+        },
+        {
+          name: "Marketplace",
+          type: "Marketplace",
+          description: "Multilojas + pagamentos em uma plataforma unica.",
+          url: "",
+        },
+      ];
+
+      function getCoverFromUrl(url) {
+        if (!url) {
+          return "assets/logo_.jpg";
+        }
+
+        const encodedUrl = encodeURIComponent(url);
+        return `https://api.microlink.io/?url=${encodedUrl}&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1280&viewport.height=800&scroll=0&waitForTimeout=3000`;
+      }
+
+      function fingerprint(project) {
+        const normalizedUrl = String(project.url || "")
+          .trim()
+          .toLowerCase();
+        if (normalizedUrl) {
+          return `url:${normalizedUrl}`;
+        }
+
+        return `name:${String(project.name || "")
+          .trim()
+          .toLowerCase()}|type:${String(project.type || "")
+          .trim()
+          .toLowerCase()}`;
+      }
+
+      function getStoredProjects() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            return [];
+          }
+
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed)
+            ? parsed.filter((item) => item?.is_published !== false)
+            : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function getSupabaseConfig() {
+        try {
+          const raw = localStorage.getItem(SUPABASE_CONFIG_KEY);
+          if (!raw) {
+            return null;
+          }
+
+          const parsed = JSON.parse(raw);
+          const url = String(parsed?.url || "").trim();
+          const anonKey = String(parsed?.anonKey || "").trim();
+          const table = String(parsed?.table || "portfolio_projects").trim();
+          if (!url || !anonKey) {
+            return null;
+          }
+
+          return { url, anonKey, table };
+        } catch {
+          return null;
+        }
+      }
+
+      function getSupabaseClient() {
+        const config = getSupabaseConfig();
+        if (!config || !window.supabase?.createClient) {
+          return null;
+        }
+
+        if (
+          supabaseClient &&
+          supabaseClient.__vtsUrl === config.url &&
+          supabaseClient.__vtsAnonKey === config.anonKey
+        ) {
+          return supabaseClient;
+        }
+
+        supabaseClient = window.supabase.createClient(
+          config.url,
+          config.anonKey,
+        );
+        supabaseClient.__vtsUrl = config.url;
+        supabaseClient.__vtsAnonKey = config.anonKey;
+        return supabaseClient;
+      }
+
+      function mapSupabaseRowToProject(row) {
+        if (!row || typeof row !== "object") {
+          return null;
+        }
+
+        return {
+          name: String(row.name || "").trim(),
+          type: String(row.type || "").trim(),
+          description: String(row.description || "").trim(),
+          url: String(row.url || "").trim(),
+          coverUrl: String(row.cover_url || "").trim(),
+          is_published: row.is_published !== false,
+          order: Number.isFinite(Number(row.sort_order))
+            ? Number(row.sort_order)
+            : null,
+        };
+      }
+
+      async function getSupabaseProjects() {
+        const config = getSupabaseConfig();
+        const client = getSupabaseClient();
+        if (!config || !client) {
+          return [];
+        }
+
+        const result = await client
+          .from(config.table)
+          .select("*")
+          .eq("is_published", true)
+          .order("sort_order", { ascending: true, nullsFirst: false })
+          .order("updated_at", { ascending: false });
+
+        if (result.error) {
+          return [];
+        }
+
+        return (result.data || [])
+          .map((row) => mapSupabaseRowToProject(row))
+          .filter((project) => project && project.name && project.type);
+      }
+
+      async function getProjects() {
+        const remoteProjects = await getSupabaseProjects();
+        const base = remoteProjects.length
+          ? remoteProjects
+          : getStoredProjects();
+        const merged = [...base, ...defaultProjects];
+        const seen = new Set();
+        return merged.filter((item) => {
+          const key = fingerprint(item);
+          if (seen.has(key)) {
+            return false;
+          }
+          seen.add(key);
+          return true;
+        });
+      }
+
+      function buildCard(project, index = 0) {
+        const wrapper = document.createElement("article");
+        wrapper.className = "pf-card reveal-item";
+        wrapper.setAttribute("tabindex", "0");
+        wrapper.style.setProperty(
+          "--reveal-delay",
+          `${Math.min(index * 45, 360)}ms`,
+        );
+
+        const img = document.createElement("img");
+        img.src =
+          String(project.coverUrl || "").trim() || getCoverFromUrl(project.url);
+        img.alt = `Capa do projeto ${project.name}`;
+        img.loading = "lazy";
+
+        const body = document.createElement("div");
+        body.className = "pf-card-body";
+
+        const title = document.createElement("h3");
+        title.textContent = project.name || "Projeto";
+
+        const pill = document.createElement("span");
+        pill.className = "pf-pill";
+        pill.textContent = project.type || "Projeto";
+
+        const desc = document.createElement("p");
+        desc.textContent =
+          project.description || "Case publicado na vitrine de projetos.";
+
+        const footer = document.createElement("div");
+        footer.className = "pf-card-footer";
+
+        const publicStatus = document.createElement("span");
+        publicStatus.className = "pf-domain";
+        publicStatus.textContent =
+          project.is_published === false
+            ? "Em planejamento"
+            : "Projeto publicado";
+
+        body.appendChild(title);
+        body.appendChild(pill);
+        body.appendChild(desc);
+        footer.appendChild(publicStatus);
+        body.appendChild(footer);
+        wrapper.appendChild(img);
+        wrapper.appendChild(body);
+
+        return wrapper;
+      }
+
+      function normalize(value) {
+        return String(value || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase();
+      }
+
+      function getProjectTypes(projects) {
+        const uniqueTypes = new Set(
+          projects.map((project) => String(project.type || "Projeto").trim()),
+        );
+        return [
+          "Todos",
+          ...Array.from(uniqueTypes).sort((a, b) => a.localeCompare(b)),
+        ];
+      }
+
+      function setupFilters(projects) {
+        const searchInput = document.getElementById("pf-search");
+        const filterSelect = document.getElementById("pf-filter");
+        const countNode = document.getElementById("pf-count");
+        const grid = document.getElementById("pf-grid");
+
+        if (!searchInput || !filterSelect || !countNode || !grid) {
+          return;
+        }
+
+        filterSelect.innerHTML = "";
+        getProjectTypes(projects).forEach((type) => {
+          const option = document.createElement("option");
+          option.value = type;
+          option.textContent = type;
+          filterSelect.appendChild(option);
+        });
+
+        const applyFilters = () => {
+          const term = normalize(searchInput.value);
+          const selectedType = filterSelect.value;
+
+          const filtered = projects.filter((project) => {
+            const projectType = String(project.type || "Projeto").trim();
+            const byType =
+              selectedType === "Todos" || projectType === selectedType;
+            if (!byType) {
+              return false;
+            }
+
+            if (!term) {
+              return true;
+            }
+
+            const haystack = normalize(
+              [project.name, project.type, project.description].join(" "),
+            );
+            return haystack.includes(term);
+          });
+
+          grid.innerHTML = "";
+          if (!filtered.length) {
+            const emptyNode = document.createElement("div");
+            emptyNode.className = "pf-empty";
+            emptyNode.textContent =
+              "Nenhum projeto encontrado com os filtros atuais.";
+            grid.appendChild(emptyNode);
+            countNode.textContent = "0 projetos";
+            return;
+          }
+
+          filtered.forEach((project) => {
+            grid.appendChild(buildCard(project, filtered.indexOf(project)));
+          });
+
+          countNode.textContent = `${filtered.length} projeto${filtered.length > 1 ? "s" : ""}`;
+          setupCardMotion();
+          setupScrollReveal();
+        };
+
+        searchInput.addEventListener("input", applyFilters);
+        filterSelect.addEventListener("change", applyFilters);
+        applyFilters();
+      }
+
+      async function render() {
+        const projects = await getProjects();
+        const grid = document.getElementById("pf-grid");
+
+        if (!grid) {
+          return;
+        }
+
+        setupFilters(projects);
+        setupHeroParallax();
+        setupScrollReveal();
+      }
+
+      async function setupSupabaseRealtime() {
+        const config = getSupabaseConfig();
+        const client = getSupabaseClient();
+        if (!config || !client) {
+          return;
+        }
+
+        if (supabaseRealtimeChannel) {
+          await client.removeChannel(supabaseRealtimeChannel);
+          supabaseRealtimeChannel = null;
+        }
+
+        supabaseRealtimeChannel = client
+          .channel(`portfolio-public-${config.table}`)
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: config.table },
+            async () => {
+              await render();
+            },
+          )
+          .subscribe();
+      }
+
+      function setupScrollReveal() {
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        const revealItems = Array.from(
+          document.querySelectorAll(".reveal-item"),
+        );
+        if (!revealItems.length) {
+          return;
+        }
+
+        if (prefersReducedMotion) {
+          revealItems.forEach((item) => item.classList.add("is-visible"));
+          return;
+        }
+
+        if (revealObserver) {
+          revealObserver.disconnect();
+        }
+
+        revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                revealObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+        );
+
+        revealItems.forEach((item) => {
+          if (!item.classList.contains("is-visible")) {
+            revealObserver.observe(item);
+          }
+        });
+      }
+
+      function setupHeroParallax() {
+        const media = document.querySelector("[data-parallax='hero-media']");
+        if (!media) {
+          return;
+        }
+
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (prefersReducedMotion) {
+          media.style.setProperty("--parallax-shift", "0px");
+          return;
+        }
+
+        const updateParallax = () => {
+          const rect = media.getBoundingClientRect();
+          const viewportCenter = window.innerHeight / 2;
+          const mediaCenter = rect.top + rect.height / 2;
+          const distance = (mediaCenter - viewportCenter) / window.innerHeight;
+          const shift = Math.max(-26, Math.min(26, -distance * 38));
+          media.style.setProperty("--parallax-shift", `${shift.toFixed(2)}px`);
+        };
+
+        let ticking = false;
+        const onScroll = () => {
+          if (ticking) {
+            return;
+          }
+          ticking = true;
+          window.requestAnimationFrame(() => {
+            updateParallax();
+            ticking = false;
+          });
+        };
+
+        updateParallax();
+        window.addEventListener("scroll", onScroll, { passive: true });
+      }
+
+      function setupCardMotion() {
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        if (prefersReducedMotion) {
+          return;
+        }
+
+        const grid = document.getElementById("pf-grid");
+        if (!grid) {
+          return;
+        }
+
+        const gridCards = Array.from(grid.querySelectorAll(".pf-card"));
+
+        if (!gridCards.length) {
+          return;
+        }
+
+        window.clearInterval(autoCardTimer);
+        window.clearTimeout(autoResumeTimer);
+        autoCardTimer = null;
+        autoResumeTimer = null;
+
+        const resetCardVars = (card) => {
+          card.style.setProperty("--hx", "0px");
+          card.style.setProperty("--hy", "0px");
+          card.style.setProperty("--rx", "0deg");
+          card.style.setProperty("--ry", "0deg");
+          card.style.setProperty("--scale", "1");
+          card.style.setProperty("--shadow-x", "0px");
+          card.style.setProperty("--shadow-y", "0px");
+        };
+
+        const resetNeighborShift = () => {
+          gridCards.forEach((card) => {
+            card.style.setProperty("--nx", "0px");
+            card.style.setProperty("--ny", "0px");
+          });
+        };
+
+        const activateNavigationState = (activeCard) => {
+          const activeIndex = gridCards.indexOf(activeCard);
+          if (activeIndex < 0) {
+            return;
+          }
+
+          grid.classList.add("is-interacting");
+          resetNeighborShift();
+
+          gridCards.forEach((card, index) => {
+            const distance = index - activeIndex;
+            card.classList.toggle("is-active", index === activeIndex);
+
+            if (!distance) {
+              card.style.setProperty("--ny", "-10px");
+              return;
+            }
+
+            const magnitude = Math.max(1, 3 - Math.abs(distance));
+            const direction = distance > 0 ? 1 : -1;
+            card.style.setProperty("--nx", `${direction * magnitude * 4}px`);
+            card.style.setProperty("--ny", `${magnitude * 2}px`);
+          });
+        };
+
+        const clearNavigationState = () => {
+          grid.classList.remove("is-interacting");
+          gridCards.forEach((card) => {
+            card.classList.remove("is-active");
+            resetCardVars(card);
+          });
+          resetNeighborShift();
+        };
+
+        let autoIndex = 0;
+
+        const stopAutoAnimation = () => {
+          window.clearInterval(autoCardTimer);
+          window.clearTimeout(autoResumeTimer);
+          autoCardTimer = null;
+          autoResumeTimer = null;
+        };
+
+        const startAutoAnimation = () => {
+          if (autoCardTimer || !gridCards.length) {
+            return;
+          }
+
+          autoCardTimer = window.setInterval(() => {
+            if (grid.matches(":hover")) {
+              return;
+            }
+
+            const activeCard = gridCards[autoIndex % gridCards.length];
+            activateNavigationState(activeCard);
+            activeCard.style.setProperty("--hy", "-8px");
+            activeCard.style.setProperty("--scale", "1.01");
+            autoIndex += 1;
+          }, 2400);
+        };
+
+        const queueAutoResume = () => {
+          window.clearTimeout(autoResumeTimer);
+          autoResumeTimer = window.setTimeout(() => {
+            if (!grid.matches(":hover")) {
+              startAutoAnimation();
+            }
+          }, 1200);
+        };
+
+        gridCards.forEach((card) => {
+          card.addEventListener("pointermove", (event) => {
+            const rect = card.getBoundingClientRect();
+            const offsetX = event.clientX - rect.left;
+            const offsetY = event.clientY - rect.top;
+            const rotateY = (offsetX / rect.width - 0.5) * 7;
+            const rotateX = (0.5 - offsetY / rect.height) * 5;
+            const hoverX = (offsetX / rect.width - 0.5) * 8;
+            const hoverY = (0.5 - offsetY / rect.height) * 6;
+            const shadowX = (offsetX / rect.width - 0.5) * 14;
+            const shadowY = (offsetY / rect.height - 0.5) * 8;
+
+            card.style.setProperty("--mx", `${(offsetX / rect.width) * 100}%`);
+            card.style.setProperty("--my", `${(offsetY / rect.height) * 100}%`);
+            card.style.setProperty("--hx", `${hoverX.toFixed(2)}px`);
+            card.style.setProperty("--hy", `${(-10 + hoverY).toFixed(2)}px`);
+            card.style.setProperty("--rx", `${rotateX.toFixed(2)}deg`);
+            card.style.setProperty("--ry", `${rotateY.toFixed(2)}deg`);
+            card.style.setProperty("--scale", "1.014");
+            card.style.setProperty("--shadow-x", `${shadowX.toFixed(2)}px`);
+            card.style.setProperty("--shadow-y", `${shadowY.toFixed(2)}px`);
+            activateNavigationState(card);
+          });
+
+          card.addEventListener("pointerenter", () => {
+            stopAutoAnimation();
+            activateNavigationState(card);
+          });
+
+          card.addEventListener("pointerleave", () => {
+            resetCardVars(card);
+            clearNavigationState();
+            queueAutoResume();
+          });
+
+          card.addEventListener("focusin", () => {
+            stopAutoAnimation();
+            activateNavigationState(card);
+            card.style.setProperty("--scale", "1.012");
+            card.style.setProperty("--hy", "-10px");
+          });
+
+          card.addEventListener("focusout", () => {
+            resetCardVars(card);
+            clearNavigationState();
+            queueAutoResume();
+          });
+        });
+
+        startAutoAnimation();
+      }
+
+      function setupPortfolioHashMode() {
+        const defaultTitle = "Portfólio | Vilarinho Tech Solutions";
+        const projectsTitle = "Projetos | Vilarinho Tech Solutions";
+
+        const syncMode = () => {
+          if (window.location.hash === "#projetos") {
+            window.location.replace("#inicio-portfolio");
+            return;
+          }
+
+          const isProjectsHash = window.location.hash === "#projetos";
+          document.title = isProjectsHash ? projectsTitle : defaultTitle;
+        };
+
+        window.addEventListener("hashchange", syncMode);
+        syncMode();
+      }
+
+      setupPortfolioHashMode();
+      setupSupabaseRealtime();
+      render();
+    </script>
+  </body>
+</html>

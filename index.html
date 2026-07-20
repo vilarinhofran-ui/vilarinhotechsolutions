@@ -20,9 +20,101 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="bg-floating-icons" aria-hidden="true">
+      <span class="float-icon float-icon-code">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M9 8l-4 4 4 4M15 8l4 4-4 4M13.5 5l-3 14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+      <span class="float-icon float-icon-cloud">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M7.5 18h9.2a3.3 3.3 0 100-6.6h-.2A5 5 0 007.2 8.6 4 4 0 007.5 18z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+      <span class="float-icon float-icon-mobile">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect
+            x="8"
+            y="3"
+            width="8"
+            height="18"
+            rx="2"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          />
+          <path
+            d="M11 6h2M11 18h2"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+        </svg>
+      </span>
+      <span class="float-icon float-icon-shield">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 3l7 3v5c0 4.4-2.8 8.1-7 10-4.2-1.9-7-5.6-7-10V6l7-3z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M9.5 12.2l1.8 1.8 3.2-3.2"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+      <span class="float-icon float-icon-chart">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M4 19h16M7 16v-3M12 16V9M17 16v-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+      <span class="float-icon float-icon-rocket">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M14 4c3.5.3 6 2.8 6.3 6.3L14 16l-6-6 6-6zM9 15l-3 3M7 17l-1 3 3-1"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <circle cx="14" cy="10" r="1.5" fill="currentColor" />
+        </svg>
+      </span>
+    </div>
+
     <div class="urgent-bar">
-      Últimas vagas para entrega em 7 dias esse mês. Bônus grátis para quem
-      fechar essa semana.
+      Tecnologia que simplifica, conecta e gera resultados.
     </div>
 
     <header class="topbar">
@@ -49,7 +141,7 @@
           <a href="#inicio">Início</a>
           <a href="#sobre">Sobre</a>
           <a href="servicos.html">Serviços</a>
-          <a href="#portfolio">Portfólio</a>
+          <a href="portfolio.html">Portfólio</a>
           <a href="#orcamento">Orçamento</a>
           <a
             class="instagram-link"
@@ -103,15 +195,6 @@
             </svg>
           </span>
         </label>
-
-        <a
-          class="btn btn-sm desktop-only"
-          href="https://wa.me/5541991443794"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Falar no WhatsApp
-        </a>
       </div>
     </header>
 
@@ -140,21 +223,80 @@
                 >Calcular orçamento grátis</a
               >
             </div>
-
-            <div class="hero-points">
-              <span>Garantia 7 dias</span>
-              <span>Pague 50% para começar</span>
-              <span>Resposta em minutos</span>
-            </div>
           </div>
 
           <aside class="hero-card section-reveal">
             <h3>Ideal para:</h3>
             <ul>
-              <li>Empresas que querem vender mais.</li>
-              <li>Autônomos que precisam de presença digital.</li>
-              <li>Negócios que querem processo simples.</li>
-              <li>Quem busca entrega rápida e suporte humano.</li>
+              <li>
+                Empresas que querem vender mais.
+                <span class="hero-li-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M4 19h16M7 16v-3M12 16V9M17 16v-5"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </span>
+              </li>
+              <li>
+                Autônomos que precisam de presença digital.
+                <span class="hero-li-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <rect
+                      x="8"
+                      y="3"
+                      width="8"
+                      height="18"
+                      rx="2"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    ></rect>
+                    <path
+                      d="M11 6h2M11 18h2"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                    ></path>
+                  </svg>
+                </span>
+              </li>
+              <li>
+                Negócios que querem processo simples.
+                <span class="hero-li-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M5 12l4 4L19 6"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </span>
+              </li>
+              <li>
+                Quem busca entrega rápida e suporte humano.
+                <span class="hero-li-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M12 3l7 3v5c0 4.4-2.8 8.1-7 10-4.2-1.9-7-5.6-7-10V6l7-3z"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </span>
+              </li>
             </ul>
           </aside>
         </div>
@@ -162,31 +304,129 @@
 
       <section id="sobre" class="section section-reveal">
         <div class="container split">
-          <div>
+          <div class="about-copy">
             <p class="section-label">Problema e Solução</p>
-            <h2>Você foca em vender. A gente cuida do resto.</h2>
+            <h2 class="about-headline">
+              <span id="about-headline-primary">Você vende com foco.</span>
+              <span id="about-headline-accent"
+                >A gente resolve o restante.</span
+              >
+            </h2>
             <p>Menos complexidade, mais resultado.</p>
+            <p>
+              Para <strong>Pessoa Física</strong>, desenvolvemos sites
+              profissionais, portfólios, currículos digitais, landing pages,
+              realizamos otimização de perfil no LinkedIn e oferecemos mentorias
+              em tecnologia e carreira, ajudando você a fortalecer sua presença
+              digital, destacar sua marca pessoal e conquistar novas
+              oportunidades profissionais.
+            </p>
+            <p>
+              Para <strong>empresas</strong>, criamos sites institucionais,
+              sistemas personalizados, automações, dashboards, integrações e
+              soluções digitais que otimizam processos, aumentam a
+              produtividade, reduzem custos e impulsionam o crescimento
+              sustentável do seu negócio.
+            </p>
           </div>
           <div class="panel-group">
             <article class="panel warning">
               <h3>O problema hoje</h3>
-              <ul>
-                <li>Agência cobra R$ 5.000, R$ 10.000 e demora meses.</li>
-                <li>Tentou fazer sozinho e travou na parte técnica.</li>
-                <li>Seu concorrente já está no Google vendendo. Você não.</li>
-                <li>Cada dia sem site é cliente indo embora.</li>
+              <ul class="panel-list">
+                <li>
+                  <span class="panel-li-icon" aria-hidden="true">!</span>
+                  <span>Agência cobra R$ 5.000, R$ 10.000 e demora meses.</span>
+                </li>
+                <li>
+                  <span class="panel-li-icon" aria-hidden="true">!</span>
+                  <span>Tentou fazer sozinho e travou na parte técnica.</span>
+                </li>
+                <li>
+                  <span class="panel-li-icon" aria-hidden="true">!</span>
+                  <span
+                    >Seu concorrente já está no Google vendendo. Você não.</span
+                  >
+                </li>
+                <li>
+                  <span class="panel-li-icon" aria-hidden="true">!</span>
+                  <span>Cada dia sem site é cliente indo embora.</span>
+                </li>
               </ul>
             </article>
             <article class="panel success">
               <h3>A solução Vilarinho Tech</h3>
-              <ul>
-                <li>Seu site no ar em até 7 dias, sem complicação.</li>
-                <li>Design moderno, estratégico e otimizado para o Google.</li>
-                <li>Hospedagem, suporte e manutenção inclusos.</li>
-                <li>Preço de 25% a 50% menor que o mercado.</li>
+              <ul class="panel-list">
+                <li>
+                  <span class="panel-li-icon" aria-hidden="true">✓</span>
+                  <span>Seu site no ar em até 7 dias, sem complicação.</span>
+                </li>
+                <li>
+                  <span class="panel-li-icon" aria-hidden="true">✓</span>
+                  <span
+                    >Design moderno, estratégico e otimizado para o
+                    Google.</span
+                  >
+                </li>
+                <li>
+                  <span class="panel-li-icon" aria-hidden="true">✓</span>
+                  <span>Hospedagem, suporte e manutenção inclusos.</span>
+                </li>
+                <li>
+                  <span class="panel-li-icon" aria-hidden="true">✓</span>
+                  <span>Preço de 25% a 50% menor que o mercado.</span>
+                </li>
               </ul>
             </article>
           </div>
+        </div>
+      </section>
+
+      <section class="section alt section-reveal">
+        <div class="container profile-grid">
+          <div class="profile-photo-wrap">
+            <img
+              class="profile-photo"
+              src="assets/3463CL90975.JPG"
+              alt="Foto profissional"
+              onerror="
+                this.onerror = null;
+                this.src = 'assets/logo_.jpg';
+              "
+            />
+          </div>
+
+          <article class="panel profile-intro-card">
+            <p class="section-label">Experiência e Confiança</p>
+            <h2>Olá, sou Francielly Vilarinho.</h2>
+            <p>
+              Sou formada em
+              <strong>Administração pela FAE Centro Universitário</strong> e
+              tenho <strong>mais de 5 anos de experiência</strong> em empresas
+              como <strong>Itaú Unibanco</strong> e
+              <strong>Grupo Boticário</strong>.
+            </p>
+            <p>
+              Foi dessa trajetória que surgiu a
+              <strong>Vilarinho Tech Solutions</strong>, com o propósito de
+              transformar tecnologia em soluções práticas, estratégicas e
+              acessíveis.
+            </p>
+
+            <div class="company-badges">
+              <article class="company-badge">
+                <span class="company-icon" aria-hidden="true">IU</span>
+                <strong>Itaú Unibanco</strong>
+              </article>
+              <article class="company-badge">
+                <span class="company-icon" aria-hidden="true">GB</span>
+                <strong>Grupo Boticário</strong>
+              </article>
+              <article class="company-badge">
+                <span class="company-icon" aria-hidden="true">FAE</span>
+                <strong>FAE Centro Universitário</strong>
+              </article>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -208,177 +448,295 @@
               <p>Entrega, ajustes e publicação com suporte.</p>
             </article>
           </div>
+
+          <div
+            class="strategy-cycle"
+            aria-label="Ciclo de execução estratégica"
+          >
+            <span>Diagnóstico</span>
+            <span>Estratégia</span>
+            <span>Execução</span>
+            <span>Análise Semanal</span>
+            <span>Otimização Contínua</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-reveal">
+        <div class="container">
+          <p class="section-label">Em Números</p>
+          <h2>Processo com transparência e foco em conversão.</h2>
+          <p class="subtitle">
+            Referência de mercado aplicada ao seu contexto: menos achismo, mais
+            dados, decisões semanais e execução prática.
+          </p>
+
+          <div class="reference-metrics">
+            <article>
+              <strong>50+</strong>
+              <span>Projetos entregues com acompanhamento real</span>
+            </article>
+            <article>
+              <strong>Semanal</strong>
+              <span>Ciclos de revisão e melhoria contínua</span>
+            </article>
+            <article>
+              <strong>100%</strong>
+              <span
+                >Visibilidade sobre status, prioridades e próximos passos</span
+              >
+            </article>
+            <article>
+              <strong>7 dias</strong>
+              <span>Prazo médio para publicação inicial</span>
+            </article>
+          </div>
         </div>
       </section>
 
       <section id="servicos" class="section section-reveal">
         <div class="container">
           <p class="section-label">Serviços</p>
-          <h2>Tudo que seu negócio precisa para vender mais.</h2>
+          <h2>Escolha o projeto ideal para o seu negócio.</h2>
+          <p class="subtitle">
+            Veja em linguagem simples o que cada projeto entrega.
+          </p>
 
-          <div class="cards">
-            <article class="service-card">
-              <div class="service-head">
-                <span class="service-icon" aria-hidden="true">◉</span>
-                <h3>Site Profissional</h3>
-              </div>
-              <p>Rápido, responsivo e pronto para conversão.</p>
-            </article>
-            <article class="service-card">
-              <div class="service-head">
-                <span class="service-icon" aria-hidden="true">◉</span>
-                <h3>Loja Virtual</h3>
-              </div>
-              <p>Vendas 24h com checkout simples.</p>
-            </article>
-            <article class="service-card">
-              <div class="service-head">
-                <span class="service-icon" aria-hidden="true">◉</span>
-                <h3>Sistema Sob Medida</h3>
-              </div>
-              <p>Painel para operação e controle interno.</p>
-            </article>
-            <article class="service-card">
-              <div class="service-head">
-                <span class="service-icon" aria-hidden="true">◉</span>
-                <h3>Automação</h3>
-              </div>
-              <p>Menos tarefa manual, mais produtividade.</p>
-            </article>
-            <article class="service-card">
-              <div class="service-head">
-                <span class="service-icon" aria-hidden="true">◉</span>
-                <h3>Integrações</h3>
-              </div>
-              <p>WhatsApp, Instagram, pagamento e APIs.</p>
-            </article>
-            <article class="service-card">
-              <div class="service-head">
-                <span class="service-icon" aria-hidden="true">◉</span>
-                <h3>SEO Local</h3>
-              </div>
-              <p>Mais visibilidade no Google da sua região.</p>
-            </article>
-          </div>
-
-          <h3 class="templates-title">
-            Templates de exemplo por tipo de projeto
-          </h3>
           <div class="template-grid">
-            <article class="template-card">
-              <h4>Cartão Digital</h4>
+            <article class="template-card" data-template-type="Cartão Digital">
+              <img
+                class="template-thumb"
+                src="assets/servicos/cartao-digital.svg"
+                alt="Prévia visual de Cartão Digital"
+              />
+              <div class="template-title-row">
+                <img
+                  class="template-favicon"
+                  src="assets/servicos/cartao-digital.svg"
+                  alt="Favicon Cartão Digital"
+                />
+                <h4>Cartão Digital</h4>
+              </div>
               <div class="template-preview">Perfil + Botões + WhatsApp</div>
-              <p>Perfil rápido com botões de contato e redes sociais.</p>
+              <p>Entrega contato rápido e presença online básica.</p>
               <a
-                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20o%20serviço%20de%20Cartão%20Digital."
+                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20Cartão%20Digital."
                 class="btn btn-ghost"
                 target="_blank"
                 rel="noreferrer"
                 >Solicitar serviço</a
               >
             </article>
-            <article class="template-card">
-              <h4>Landing Page</h4>
-              <div class="template-preview">Headline + CTA + Prova Social</div>
-              <p>Página de campanha com foco em captação de leads.</p>
-              <a
-                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20o%20serviço%20de%20Landing%20Page."
-                class="btn btn-ghost"
-                target="_blank"
-                rel="noreferrer"
-                >Solicitar serviço</a
-              >
-            </article>
-            <article class="template-card">
-              <h4>Site Institucional</h4>
-              <div class="template-preview">
-                Home + Sobre + Serviços + Contato
+            <article class="template-card" data-template-type="Landing Page">
+              <img
+                class="template-thumb"
+                src="assets/servicos/landing-page.svg"
+                alt="Prévia visual de Landing Page"
+              />
+              <div class="template-title-row">
+                <img
+                  class="template-favicon"
+                  src="assets/servicos/landing-page.svg"
+                  alt="Favicon Landing Page"
+                />
+                <h4>Landing Page</h4>
               </div>
-              <p>Apresentação da empresa com autoridade e credibilidade.</p>
+              <div class="template-preview">Headline + Oferta + CTA</div>
+              <p>Entrega geração de leads para campanhas e anúncios.</p>
               <a
-                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20o%20serviço%20de%20Site%20Institucional."
+                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20Landing%20Page."
                 class="btn btn-ghost"
                 target="_blank"
                 rel="noreferrer"
                 >Solicitar serviço</a
               >
             </article>
-            <article class="template-card">
-              <h4>E-commerce</h4>
+            <article
+              class="template-card"
+              data-template-type="Site Institucional"
+            >
+              <img
+                class="template-thumb"
+                src="assets/servicos/site-institucional.svg"
+                alt="Prévia visual de Site Institucional"
+              />
+              <div class="template-title-row">
+                <img
+                  class="template-favicon"
+                  src="assets/servicos/site-institucional.svg"
+                  alt="Favicon Site Institucional"
+                />
+                <h4>Site Institucional</h4>
+              </div>
+              <div class="template-preview">Home + Sobre + Contato</div>
+              <p>Entrega autoridade da marca e captação orgânica.</p>
+              <a
+                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20Site%20Institucional."
+                class="btn btn-ghost"
+                target="_blank"
+                rel="noreferrer"
+                >Solicitar serviço</a
+              >
+            </article>
+            <article class="template-card" data-template-type="E-commerce">
+              <img
+                class="template-thumb"
+                src="assets/servicos/ecommerce.svg"
+                alt="Prévia visual de E-commerce"
+              />
+              <div class="template-title-row">
+                <img
+                  class="template-favicon"
+                  src="assets/servicos/ecommerce.svg"
+                  alt="Favicon E-commerce"
+                />
+                <h4>E-commerce</h4>
+              </div>
               <div class="template-preview">Vitrine + Carrinho + Checkout</div>
-              <p>Catálogo, carrinho e checkout para vendas online.</p>
+              <p>Entrega vendas online com gestão de produtos e pedidos.</p>
               <a
-                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20o%20serviço%20de%20E-commerce."
+                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20E-commerce."
                 class="btn btn-ghost"
                 target="_blank"
                 rel="noreferrer"
                 >Solicitar serviço</a
               >
             </article>
-            <article class="template-card">
-              <h4>Sistema Web</h4>
-              <div class="template-preview">
-                Dashboard + Usuários + Relatórios
+            <article class="template-card" data-template-type="Sistema Web">
+              <img
+                class="template-thumb"
+                src="assets/servicos/sistema-web.svg"
+                alt="Prévia visual de Sistema Web"
+              />
+              <div class="template-title-row">
+                <img
+                  class="template-favicon"
+                  src="assets/servicos/sistema-web.svg"
+                  alt="Favicon Sistema Web"
+                />
+                <h4>Sistema Web</h4>
               </div>
-              <p>Painel interno para operação, equipe e processos.</p>
+              <div class="template-preview">
+                Dashboard + Processos + Relatórios
+              </div>
+              <p>Entrega organização interna e produtividade da equipe.</p>
               <a
-                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20o%20serviço%20de%20Sistema%20Web."
+                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20Sistema%20Web."
                 class="btn btn-ghost"
                 target="_blank"
                 rel="noreferrer"
                 >Solicitar serviço</a
               >
             </article>
-            <article class="template-card">
-              <h4>Plataforma SaaS</h4>
+            <article class="template-card" data-template-type="Plataforma SaaS">
+              <img
+                class="template-thumb"
+                src="assets/servicos/saas.svg"
+                alt="Prévia visual de Plataforma SaaS"
+              />
+              <div class="template-title-row">
+                <img
+                  class="template-favicon"
+                  src="assets/servicos/saas.svg"
+                  alt="Favicon Plataforma SaaS"
+                />
+                <h4>Plataforma SaaS</h4>
+              </div>
               <div class="template-preview">
                 Plano + Assinatura + Área Logada
               </div>
-              <p>Produto digital com área logada e assinatura.</p>
+              <p>Entrega produto digital com recorrência e escala.</p>
               <a
-                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20o%20serviço%20de%20Plataforma%20SaaS."
+                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20Plataforma%20SaaS."
                 class="btn btn-ghost"
                 target="_blank"
                 rel="noreferrer"
                 >Solicitar serviço</a
               >
             </article>
-            <article class="template-card">
-              <h4>Marketplace</h4>
-              <div class="template-preview">
-                Lojas + Produtos + Gestão Central
+            <article class="template-card" data-template-type="Marketplace">
+              <img
+                class="template-thumb"
+                src="assets/servicos/marketplace.svg"
+                alt="Prévia visual de Marketplace"
+              />
+              <div class="template-title-row">
+                <img
+                  class="template-favicon"
+                  src="assets/servicos/marketplace.svg"
+                  alt="Favicon Marketplace"
+                />
+                <h4>Marketplace</h4>
               </div>
-              <p>Estrutura multi-vendedor com gestão central.</p>
+              <div class="template-preview">Lojas + Gestão + Pagamentos</div>
+              <p>Entrega ecossistema de vendedores em uma plataforma única.</p>
               <a
-                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20o%20serviço%20de%20Marketplace."
+                href="https://wa.me/5541991443794?text=Olá%20Vilarinho%20Tech!%20Quero%20solicitar%20Marketplace."
                 class="btn btn-ghost"
                 target="_blank"
                 rel="noreferrer"
                 >Solicitar serviço</a
               >
             </article>
-          </div>
-
-          <div class="icon-card-grid">
-            <article class="mini-card"><span>◉</span>Entrega rápida</article>
-            <article class="mini-card"><span>◉</span>Visual moderno</article>
-            <article class="mini-card"><span>◉</span>Suporte humano</article>
-            <article class="mini-card"><span>◉</span>Painel simples</article>
-            <article class="mini-card">
-              <span>◉</span>Integrações prontas
+            <article class="template-card" data-template-type="Mentoria PF">
+              <img
+                class="template-thumb"
+                src="assets/servicos/landing-page.svg"
+                alt="Prévia visual de Mentoria Pessoa Fisica"
+              />
+              <div class="template-title-row">
+                <img
+                  class="template-favicon"
+                  src="assets/servicos/landing-page.svg"
+                  alt="Favicon Mentoria Pessoa Fisica"
+                />
+                <h4>Mentoria PF</h4>
+              </div>
+              <div class="template-preview">Plano + Direcao + Execucao</div>
+              <p>
+                Entrega orientacao estrategica para pessoa fisica construir sua
+                presenca digital com clareza.
+              </p>
+              <a
+                href="https://vilarinhofran-ui.github.io/Mentoria-Vilarinho-Tech/mentoria.index.html#investir"
+                class="btn btn-ghost"
+                target="_blank"
+                rel="noreferrer"
+                >Solicitar serviço</a
+              >
             </article>
-            <article class="mini-card"><span>◉</span>Foco em conversão</article>
-          </div>
-
-          <div class="stats">
-            <div><strong>50+</strong><span>Negócios no ar</span></div>
-            <div><strong>98%</strong><span>Clientes satisfeitos</span></div>
-            <div>
-              <strong>7 dias</strong><span>Prazo médio de entrega</span>
-            </div>
-            <div>
-              <strong>50%</strong><span>Mais barato que o mercado</span>
-            </div>
+            <article
+              class="template-card"
+              data-template-type="LinkedIn Pro Visibility"
+            >
+              <img
+                class="template-thumb"
+                src="assets/servicos/site-institucional.svg"
+                alt="Prévia visual de LinkedIn Pro Visibility"
+              />
+              <div class="template-title-row">
+                <img
+                  class="template-favicon"
+                  src="assets/servicos/site-institucional.svg"
+                  alt="Favicon LinkedIn Pro Visibility"
+                />
+                <h4>LinkedIn Pro Visibility PF</h4>
+              </div>
+              <div class="template-preview">
+                Plano Essencial R$ 197 | Pro R$ 497
+              </div>
+              <p>
+                Entrega posicionamento profissional no LinkedIn para aumentar
+                visibilidade e atrair oportunidades.
+              </p>
+              <a
+                href="https://vilarinhofran-ui.github.io/Mentoria-Vilarinho-Tech/index.html"
+                class="btn btn-ghost"
+                target="_blank"
+                rel="noreferrer"
+                >Solicitar serviço</a
+              >
+            </article>
           </div>
         </div>
       </section>
@@ -411,6 +769,14 @@
               <cite>Camila A. • Loja Online</cite>
             </blockquote>
           </div>
+          <a
+            class="btn social-proof-cta"
+            href="https://www.google.com/search?q=Vilarinho+Tech+Solutions&oq=vila&gs_lcrp=EgZjaHJvbWUqCAgCEEUYJxg7MgYIABBFGDwyBggBEEUYOTIICAIQRRgnGDsyBggDEEUYQTIGCAQQRRhBMgYIBRBFGEEyBggGEEUYPDIGCAcQRRg90gEIMjQ3NWowajeoAgCwAgA&sourceid=chrome&source=chrome.ob&ie=UTF-8#lrd=0x94dcf12fbb499aa9:0xf3baecc44a5f9361,3,,,,"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Avaliar no Google
+          </a>
         </div>
       </section>
 
@@ -418,10 +784,227 @@
         <div class="container budget-wrap">
           <div>
             <p class="section-label">Recomendador de Projeto</p>
-            <h2>Escolha seu objetivo e receba uma recomendação estratégica.</h2>
-            <p>Seleção rápida. Recomendação direta.</p>
+            <h2>
+              Escolha seus objetivos e receba uma recomendação estratégica.
+            </h2>
 
             <form id="budget-form" class="budget-form">
+              <label>
+                Nome
+                <input
+                  id="client-name"
+                  type="text"
+                  placeholder="Digite seu nome"
+                  autocomplete="name"
+                />
+              </label>
+
+              <label>
+                WhatsApp
+                <input
+                  id="client-whatsapp"
+                  type="tel"
+                  placeholder="(00) 00000-0000"
+                  autocomplete="tel"
+                />
+              </label>
+
+              <label>
+                E-mail
+                <input
+                  id="client-email"
+                  type="email"
+                  placeholder="voce@email.com"
+                  autocomplete="email"
+                />
+              </label>
+
+              <label>
+                Qual e a faixa de investimento prevista para este projeto?
+                <small class="segment-helper"
+                  >Essa informacao nos ajuda a recomendar a solucao mais
+                  adequada as suas necessidades e objetivos.</small
+                >
+                <select id="project-investment-range">
+                  <option value="Ainda estou avaliando">
+                    Ainda estou avaliando
+                  </option>
+                  <option value="Ate R$ 1.000">Ate R$ 1.000</option>
+                  <option value="De R$ 1.000 a R$ 2.000">
+                    De R$ 1.000 a R$ 2.000
+                  </option>
+                  <option value="De R$ 2.000 a R$ 3.000">
+                    De R$ 2.000 a R$ 3.000
+                  </option>
+                  <option value="De R$ 3.000 a R$ 4.500">
+                    De R$ 3.000 a R$ 4.500
+                  </option>
+                </select>
+              </label>
+
+              <label>
+                Ramo da empresa
+                <small class="segment-helper"
+                  >Escolha o ramo principal para carregar a lista de segmentacao
+                  correspondente.</small
+                >
+                <select id="project-business-branch" required>
+                  <option value="">Selecione o ramo</option>
+                  <option value="Agronegócio">Agronegócio</option>
+                  <option value="Alimentação">Alimentação</option>
+                  <option value="Arquitetura">Arquitetura</option>
+                  <option value="Automotivo">Automotivo</option>
+                  <option value="Beleza e Estética">Beleza e Estética</option>
+                  <option value="Comércio">Comércio</option>
+                  <option value="Comunicação">Comunicação</option>
+                  <option value="Construção Civil">Construção Civil</option>
+                  <option value="Contabilidade">Contabilidade</option>
+                  <option value="Educação">Educação</option>
+                  <option value="Energia">Energia</option>
+                  <option value="Engenharia">Engenharia</option>
+                  <option value="Esportes">Esportes</option>
+                  <option value="Eventos">Eventos</option>
+                  <option value="Financeiro">Financeiro</option>
+                  <option value="Hotelaria">Hotelaria</option>
+                  <option value="Imobiliário">Imobiliário</option>
+                  <option value="Indústria">Indústria</option>
+                  <option value="Jurídico">Jurídico</option>
+                  <option value="Limpeza e Conservação">
+                    Limpeza e Conservação
+                  </option>
+                  <option value="Logística">Logística</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Meio Ambiente">Meio Ambiente</option>
+                  <option value="Moda">Moda</option>
+                  <option value="Pet">Pet</option>
+                  <option value="Recursos Humanos">Recursos Humanos</option>
+                  <option value="Saúde">Saúde</option>
+                  <option value="Segurança">Segurança</option>
+                  <option value="Serviços Gerais">Serviços Gerais</option>
+                  <option value="Tecnologia da Informação">
+                    Tecnologia da Informação
+                  </option>
+                  <option value="Telecomunicações">Telecomunicações</option>
+                  <option value="Terceiro Setor">Terceiro Setor</option>
+                  <option value="Transporte">Transporte</option>
+                  <option value="Turismo">Turismo</option>
+                </select>
+              </label>
+
+              <label>
+                Segmentação
+                <small class="segment-helper"
+                  >A lista muda de acordo com o ramo escolhido. Se nao
+                  encontrar, selecione Outro e descreva.</small
+                >
+                <select id="project-segmentation" required>
+                  <option value="">Selecione a segmentacao</option>
+                  <option value="Outro">Outro</option>
+                </select>
+              </label>
+
+              <label id="segment-other-wrap" hidden>
+                Descreva seu segmento
+                <input
+                  id="project-segment-other"
+                  type="text"
+                  placeholder="Ex: Clinica veterinaria especializada em felinos"
+                />
+              </label>
+
+              <fieldset class="goal-picker" id="project-goal-group">
+                <legend>Objetivo principal (escolha até 3)</legend>
+                <small class="segment-helper"
+                  >Selecione os objetivos estratégicos prioritários para a
+                  recomendação.</small
+                >
+                <div class="goal-options">
+                  <label class="goal-option">
+                    <input
+                      type="checkbox"
+                      name="project-goals"
+                      value="vender-online"
+                    />
+                    <span>Vender produtos online</span>
+                  </label>
+                  <label class="goal-option">
+                    <input
+                      type="checkbox"
+                      name="project-goals"
+                      value="captar-leads"
+                    />
+                    <span>Gerar leads e captar clientes</span>
+                  </label>
+                  <label class="goal-option">
+                    <input
+                      type="checkbox"
+                      name="project-goals"
+                      value="autoridade"
+                    />
+                    <span>Fortalecer autoridade da marca</span>
+                  </label>
+                  <label class="goal-option">
+                    <input
+                      type="checkbox"
+                      name="project-goals"
+                      value="automatizar"
+                    />
+                    <span>Automatizar processos internos</span>
+                  </label>
+                  <label class="goal-option">
+                    <input
+                      type="checkbox"
+                      name="project-goals"
+                      value="produto-digital"
+                    />
+                    <span>Lançar produto digital</span>
+                  </label>
+                  <label class="goal-option">
+                    <input
+                      type="checkbox"
+                      name="project-goals"
+                      value="agendar-atendimentos"
+                    />
+                    <span>Organizar agenda e atendimentos</span>
+                  </label>
+                  <label class="goal-option">
+                    <input
+                      type="checkbox"
+                      name="project-goals"
+                      value="suporte-cliente"
+                    />
+                    <span>Melhorar suporte e relacionamento</span>
+                  </label>
+                  <label class="goal-option">
+                    <input
+                      type="checkbox"
+                      name="project-goals"
+                      value="escalar-operacao"
+                    />
+                    <span>Escalar operação com previsibilidade</span>
+                  </label>
+                  <label class="goal-option">
+                    <input
+                      type="checkbox"
+                      name="project-goals"
+                      value="fidelizar-clientes"
+                    />
+                    <span>Aumentar retenção e fidelização</span>
+                  </label>
+                  <label class="goal-option">
+                    <input
+                      type="checkbox"
+                      name="project-goals"
+                      value="validar-oferta"
+                    />
+                    <span>Validar nova oferta ou serviço</span>
+                  </label>
+                </div>
+                <small id="project-goal-feedback" class="goal-feedback"
+                  >0 de 3 objetivos selecionados.</small
+                >
+              </fieldset>
+
               <label>
                 Tipo de Projeto
                 <select id="project-type" required>
@@ -436,219 +1019,437 @@
                 </select>
               </label>
 
-              <label>
-                Objetivo principal
-                <select id="project-goal" required>
-                  <option value="">Selecione</option>
-                  <option value="vender-online">Vender produtos online</option>
-                  <option value="captar-leads">
-                    Gerar leads e captar clientes
-                  </option>
-                  <option value="autoridade">Apresentar a empresa</option>
-                  <option value="automatizar">
-                    Automatizar processos internos
-                  </option>
-                  <option value="produto-digital">
-                    Lançar produto digital
-                  </option>
-                </select>
-              </label>
+              <a
+                class="btn"
+                id="cta-whatsapp"
+                href="https://wa.me/5541991443794"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Solicitar serviço
+              </a>
             </form>
           </div>
 
           <aside class="budget-result">
             <h3>Recomendação para seu objetivo</h3>
             <p id="recommend-title">
-              Selecione tipo e objetivo para ver recomendação.
+              Selecione segmento e objetivos para ver a classificação
+              automática.
             </p>
             <p class="recommendation-text" id="recommend-text"></p>
+            <p class="recommendation-text" id="recommend-ai-explanation"></p>
             <ul class="recommendation-list" id="recommend-list"></ul>
-            <a
-              class="btn"
-              id="cta-whatsapp"
-              href="https://wa.me/5541991443794"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Receber orientação no WhatsApp
-            </a>
-            <small>Sem compromisso • Resposta em até 24h</small>
+            <div
+              id="recommend-template-card"
+              class="recommend-template-card"
+            ></div>
 
-            <div class="bonus">
-              <h4>Próximos passos recomendados</h4>
-              <ul>
-                <li>Definir público-alvo e proposta de valor</li>
-                <li>Organizar conteúdo e diferenciais de venda</li>
-                <li>Mapear integrações necessárias do negócio</li>
-                <li>Planejar funil de conversão com CTA estratégico</li>
-              </ul>
-              <p>
-                <strong
-                  >Estratégia personalizada para acelerar resultados</strong
-                >
-              </p>
-            </div>
-
-            <div class="guarantee">
-              <h4>Garantia Total</h4>
-              <p>
-                7 dias de satisfação ou seu dinheiro de volta. Se não amar o
-                resultado, a gente refaz quantas vezes for preciso.
-              </p>
+            <div class="payment-methods">
+              <h4>Formas de pagamento</h4>
+              <div class="payment-chips">
+                <span class="payment-chip">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect
+                      x="2.5"
+                      y="5"
+                      width="19"
+                      height="14"
+                      rx="2"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                    />
+                    <path
+                      d="M2.5 10.2h19"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                    />
+                  </svg>
+                  Debito
+                </span>
+                <span class="payment-chip">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect
+                      x="2.5"
+                      y="5"
+                      width="19"
+                      height="14"
+                      rx="2"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                    />
+                    <path
+                      d="M2.5 10.2h19"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                    />
+                  </svg>
+                  Credito
+                </span>
+                <span class="payment-chip">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M8.1 8.1l3.9-3.9 3.9 3.9-3.9 3.9-3.9-3.9zM8.1 15.9L12 12l3.9 3.9-3.9 3.9-3.9-3.9z"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  Pix
+                </span>
+              </div>
+              <div class="card-flags" aria-label="Bandeiras de cartao aceitas">
+                <span class="card-flag"><i>V</i> Visa</span>
+                <span class="card-flag"><i>MC</i> Mastercard</span>
+                <span class="card-flag"><i>E</i> Elo</span>
+                <span class="card-flag"><i>H</i> Hipercard</span>
+              </div>
             </div>
           </aside>
         </div>
       </section>
 
+      <section id="admin-login" class="section section-reveal" hidden>
+        <div class="container">
+          <p class="section-label">Acesso Restrito</p>
+          <h2>Login do Desenvolvedor</h2>
+          <p>Entre com usuario e senha para acessar o painel admin.</p>
+
+          <form id="admin-login-form" class="contact-form admin-login-form">
+            <label>
+              Usuario
+              <input
+                id="admin-login-user"
+                type="text"
+                autocomplete="username"
+                placeholder="Digite seu usuario"
+                required
+              />
+            </label>
+            <label>
+              Senha
+              <input
+                id="admin-login-password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Digite sua senha"
+                required
+              />
+            </label>
+            <button
+              id="admin-google-continue"
+              type="button"
+              class="btn btn-ghost"
+            >
+              Continuar com Google
+            </button>
+            <button
+              id="admin-forgot-password"
+              type="button"
+              class="btn btn-ghost btn-sm"
+            >
+              Esqueceu a senha?
+            </button>
+            <button type="submit" class="btn">Entrar no Admin</button>
+            <small id="admin-login-feedback"></small>
+          </form>
+        </div>
+      </section>
+
       <section id="admin" class="section section-reveal" hidden>
         <div class="container">
-          <p class="section-label">Painel do Cliente</p>
-          <h2>Admin de Projetos Desenvolvidos</h2>
-          <p>Cadastre e publique no portfólio em segundos.</p>
+          <p class="section-label">Painel do Desenvolvedor</p>
+          <h2>Projetos do Portfólio</h2>
+          <p>Gerencie a vitrine de projetos com preenchimento rapido.</p>
 
-          <form id="admin-project-form" class="contact-form admin-form">
-            <h3>Conexao Supabase</h3>
-            <label>
-              Supabase URL
-              <input
-                id="supabase-url"
-                type="url"
-                placeholder="https://SEU-PROJETO.supabase.co"
-              />
-            </label>
-            <label>
-              Supabase Anon Key
-              <input
-                id="supabase-anon-key"
-                type="text"
-                placeholder="Sua anon key publica"
-              />
-            </label>
-            <button id="supabase-connect" type="button" class="btn btn-ghost">
-              Conectar Supabase
+          <div class="admin-access-row">
+            <small>Sessao autenticada para gerenciamento do site.</small>
+            <button
+              id="admin-logout"
+              type="button"
+              class="btn btn-ghost btn-sm"
+            >
+              Sair do Admin
             </button>
-            <small id="supabase-status"></small>
+          </div>
 
-            <div class="admin-auth-box">
-              <button id="admin-google-login" type="button" class="btn">
-                Acessar Admin com Google
+          <div class="admin-supabase-box" id="admin-supabase-box">
+            <div class="admin-supabase-head">
+              <h3>Sincronizacao Premium em Tempo Real</h3>
+              <span class="admin-chip">Supabase</span>
+            </div>
+            <p>
+              Conecte o banco para publicar projetos em tempo real no portfolio
+              publico com backup local automatico.
+            </p>
+            <div class="admin-supabase-grid">
+              <label>
+                URL do Supabase
+                <input
+                  id="supabase-url"
+                  type="url"
+                  placeholder="https://xxxx.supabase.co"
+                />
+              </label>
+              <label>
+                Chave Anon
+                <input
+                  id="supabase-anon-key"
+                  type="text"
+                  placeholder="Cole a anon key"
+                />
+              </label>
+              <label>
+                Tabela
+                <input
+                  id="supabase-table"
+                  type="text"
+                  placeholder="portfolio_projects"
+                />
+              </label>
+              <label>
+                Bucket de imagens
+                <input
+                  id="supabase-bucket"
+                  type="text"
+                  placeholder="portfolio-covers"
+                />
+              </label>
+            </div>
+            <div class="admin-supabase-actions">
+              <button
+                id="supabase-connect"
+                type="button"
+                class="btn btn-ghost btn-sm"
+              >
+                Conectar Supabase
               </button>
               <button
-                id="admin-google-logout"
+                id="supabase-sync-now"
                 type="button"
-                class="btn btn-ghost"
-                hidden
+                class="btn btn-ghost btn-sm"
               >
-                Sair da conta Admin
+                Sincronizar Agora
               </button>
-              <small id="admin-auth-status">
-                Faça login com o email autorizado para liberar o cadastro.
-              </small>
+              <button
+                id="supabase-disconnect"
+                type="button"
+                class="btn btn-ghost btn-sm"
+              >
+                Desconectar
+              </button>
+            </div>
+            <small id="supabase-status">Modo local ativo.</small>
+          </div>
 
-              <div class="external-connect-box">
-                <strong>Conectar Plataformas</strong>
-                <div class="external-connect-actions">
+          <form id="admin-project-form" class="contact-form admin-form">
+            <div id="admin-project-fields" hidden>
+              <div class="admin-project-head">
+                <h3>Projetos do Portfólio</h3>
+                <button id="admin-new-project" type="button" class="btn btn-sm">
+                  + Novo Projeto
+                </button>
+              </div>
+
+              <div class="admin-project-grid">
+                <label class="field-name">
+                  Nome
+                  <input
+                    id="admin-name"
+                    type="text"
+                    placeholder="Ex: Residencial Valencia"
+                    required
+                  />
+                </label>
+                <label class="field-url">
+                  URL do Projeto
+                  <input
+                    id="admin-url"
+                    type="url"
+                    placeholder="https://seuprojeto.com"
+                    required
+                  />
+                  <small
+                    >Use a URL completa com http:// ou https://. A imagem de
+                    capa sera gerada automaticamente a partir desta URL.</small
+                  >
+                </label>
+                <label class="field-type">
+                  Tipo de Projeto
+                  <select id="admin-type" required>
+                    <option value="">Selecione</option>
+                    <option>Cartao Digital</option>
+                    <option>Landing Page</option>
+                    <option>Site Institucional</option>
+                    <option>E-commerce</option>
+                    <option>Sistema Web</option>
+                    <option>Plataforma SaaS</option>
+                    <option>Marketplace</option>
+                  </select>
+                </label>
+                <label class="field-order">
+                  Ordem
+                  <input
+                    id="admin-order"
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="1"
+                  />
+                </label>
+                <label class="field-branch">
+                  Ramo da Empresa
+                  <select id="admin-business-branch" required>
+                    <option value="">Selecione o ramo</option>
+                    <option value="Agronegócio">Agronegócio</option>
+                    <option value="Alimentação">Alimentação</option>
+                    <option value="Arquitetura">Arquitetura</option>
+                    <option value="Automotivo">Automotivo</option>
+                    <option value="Beleza e Estética">Beleza e Estética</option>
+                    <option value="Comércio">Comércio</option>
+                    <option value="Comunicação">Comunicação</option>
+                    <option value="Construção Civil">Construção Civil</option>
+                    <option value="Contabilidade">Contabilidade</option>
+                    <option value="Educação">Educação</option>
+                    <option value="Energia">Energia</option>
+                    <option value="Engenharia">Engenharia</option>
+                    <option value="Esportes">Esportes</option>
+                    <option value="Eventos">Eventos</option>
+                    <option value="Financeiro">Financeiro</option>
+                    <option value="Hotelaria">Hotelaria</option>
+                    <option value="Imobiliário">Imobiliário</option>
+                    <option value="Indústria">Indústria</option>
+                    <option value="Jurídico">Jurídico</option>
+                    <option value="Limpeza e Conservação">
+                      Limpeza e Conservação
+                    </option>
+                    <option value="Logística">Logística</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Meio Ambiente">Meio Ambiente</option>
+                    <option value="Moda">Moda</option>
+                    <option value="Pet">Pet</option>
+                    <option value="Recursos Humanos">Recursos Humanos</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Segurança">Segurança</option>
+                    <option value="Serviços Gerais">Serviços Gerais</option>
+                    <option value="Tecnologia da Informação">
+                      Tecnologia da Informação
+                    </option>
+                    <option value="Telecomunicações">Telecomunicações</option>
+                    <option value="Terceiro Setor">Terceiro Setor</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Turismo">Turismo</option>
+                  </select>
+                </label>
+                <label class="field-segmentation">
+                  Segmentação
+                  <select id="admin-segmentation" required>
+                    <option value="">Selecione a segmentação</option>
+                    <option value="Outro">Outro</option>
+                  </select>
+                </label>
+                <label id="admin-segmentation-other-wrap" hidden>
+                  Segmentação (Outro)
+                  <input
+                    id="admin-segmentation-other"
+                    type="text"
+                    placeholder="Descreva a segmentação"
+                  />
+                </label>
+                <label class="field-status">
+                  Status do Projeto
+                  <select id="admin-status">
+                    <option value="published">Publicado</option>
+                    <option value="draft">Rascunho</option>
+                  </select>
+                </label>
+
+                <div class="admin-cover-preview-box field-preview">
+                  <strong>Prévia da Capa (automática)</strong>
+                  <img
+                    id="admin-cover-preview"
+                    src="https://api.microlink.io/?url=https%3A%2F%2Fresidencialvalencia.lovable.app%2F&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1280&viewport.height=800&hide=a%5Bhref*%3D%22lovable.dev%22%5D%2C%20%5Bclass*%3D%22lovable%22%5D%2C%20%23lovable-badge%2C%20%5Bdata-lovable%5D%2C%20a%5Bhref*%3D%22lovable%22%5D%2C%20div%5Bid*%3D%22lovable%22%5D%2C%20%5Bclass*%3D%22gpt-engineer%22%5D&scroll=0&waitForTimeout=3000"
+                    alt="Preview da capa automatica"
+                  />
+                  <label class="admin-cover-upload-field">
+                    Upload de capa
+                    <input
+                      id="admin-cover-upload"
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp"
+                    />
+                  </label>
+                  <div class="admin-cover-upload-actions">
+                    <button
+                      id="admin-remove-cover"
+                      type="button"
+                      class="btn btn-ghost btn-sm"
+                    >
+                      Remover capa customizada
+                    </button>
+                  </div>
+                </div>
+
+                <label class="field-description">
+                  Descrição
+                  <textarea
+                    id="admin-description"
+                    rows="3"
+                    placeholder="Ex: Site institucional para empreendimento imobiliário com design elegante e foco em conversão."
+                    required
+                  ></textarea>
+                </label>
+
+                <div class="admin-quick-actions field-quick">
                   <button
-                    id="connect-github"
+                    id="admin-autofill-url"
                     type="button"
                     class="btn btn-ghost btn-sm"
                   >
-                    Conectar GitHub
-                  </button>
-                  <button
-                    id="connect-netlify"
-                    type="button"
-                    class="btn btn-ghost btn-sm"
-                  >
-                    Conectar Netlify
+                    Preencher automaticamente pela URL
                   </button>
                 </div>
-                <small id="external-connect-status">
-                  Conecte e depois use "Sincronizar por URLs" para espelhar no
-                  portfólio.
-                </small>
-              </div>
-            </div>
 
-            <div id="admin-project-fields" hidden>
-              <h3>Cadastro de Projeto</h3>
-              <label>
-                Nome do projeto
-                <input
-                  id="admin-name"
-                  type="text"
-                  placeholder="Ex: Clínica Vida"
-                  required
-                />
-              </label>
-              <label>
-                Tipo de projeto
-                <select id="admin-type" required>
-                  <option value="">Selecione</option>
-                  <option>Landing Page</option>
-                  <option>Site Institucional</option>
-                  <option>E-commerce</option>
-                  <option>Sistema Web</option>
-                  <option>Plataforma SaaS</option>
-                  <option>Marketplace</option>
-                </select>
-              </label>
-              <label>
-                Resultado ou descrição
-                <textarea
-                  id="admin-description"
-                  rows="3"
-                  placeholder="Ex: aumento de leads e presença local"
-                  required
-                ></textarea>
-              </label>
-              <label>
-                URL para "Ver projeto"
-                <input
-                  id="admin-url"
-                  type="url"
-                  placeholder="https://seuprojeto.com"
-                />
-              </label>
-              <div class="admin-quick-actions">
-                <button
-                  id="admin-autofill-url"
-                  type="button"
-                  class="btn btn-ghost btn-sm"
-                >
-                  Preencher automaticamente pela URL
-                </button>
-                <small>
-                  Com a URL, o sistema completa nome/tipo/descricao e permite
-                  publicar mais rapido.
-                </small>
+                <div class="field-submit">
+                  <div class="admin-submit-actions">
+                    <button
+                      type="submit"
+                      class="btn btn-ghost"
+                      data-submit-mode="save"
+                    >
+                      Salvar
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-ghost"
+                      data-submit-mode="publish"
+                    >
+                      Publicar
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn"
+                      data-submit-mode="save-publish"
+                    >
+                      Salvar e Publicar
+                    </button>
+                  </div>
+                  <small id="admin-feedback"></small>
+                </div>
               </div>
-              <label>
-                URL da capa do projeto (opcional)
-                <input
-                  id="admin-cover-url"
-                  type="url"
-                  placeholder="https://seuprojeto.com/capa.jpg"
-                />
-              </label>
-              <button type="submit" class="btn">
-                Adicionar ao portfólio público
-              </button>
-              <small id="admin-feedback"></small>
 
-              <h3>Sincronizar por URLs</h3>
-              <label>
-                URLs dos projetos (1 por linha)
-                <textarea
-                  id="sync-urls"
-                  rows="5"
-                  placeholder="https://meuprojeto.lovable.app&#10;https://meuprojeto.netlify.app&#10;https://empresa.github.io/site"
-                ></textarea>
-              </label>
-              <button id="sync-urls-btn" type="button" class="btn btn-ghost">
-                Sincronizar URLs no portfólio
-              </button>
-              <small id="sync-urls-feedback"></small>
+              <h3>Gerenciar Projetos</h3>
+              <p>Ajuste status, ordem, edite dados ou exclua projetos.</p>
+              <div
+                id="admin-project-manager"
+                class="admin-project-manager"
+              ></div>
+              <small id="admin-manager-feedback"></small>
             </div>
           </form>
         </div>
@@ -661,14 +1462,6 @@
             <h2>Bora colocar seu negócio no digital agora?</h2>
             <p>Cada dia sem site é cliente indo embora.</p>
           </div>
-          <a
-            class="btn"
-            href="https://wa.me/5541991443794?text=Ol%C3%A1%2C%20Vilarinho%20Tech!%20Quero%20garantir%20minha%20vaga%20essa%20semana%20e%20aproveitar%20os%20b%C3%B4nus."
-            target="_blank"
-            rel="noreferrer"
-          >
-            Falar agora no WhatsApp
-          </a>
         </div>
       </section>
 
@@ -677,14 +1470,29 @@
           <div class="contact-copy">
             <p class="section-label">Contato</p>
             <h2>Vamos conversar?</h2>
-            <p>Resposta rápida no mesmo dia.</p>
             <p>
               <a href="mailto:vilarinhotechsolutions@gmail.com"
                 >vilarinhotechsolutions@gmail.com</a
               >
             </p>
             <p><a href="tel:+5541991443794">(41) 99144-3794</a></p>
-            <p>Curitiba, Paraná, Brasil</p>
+            <p>São José dos Pinhais, Paraná, Brasil</p>
+            <div class="contact-map-wrap">
+              <iframe
+                class="contact-map"
+                src="https://www.google.com/maps?q=Travessa%20Alcidio%20Rocco%205%20-%20Afonso%20Pena%20-%20S%C3%A3o%20Jos%C3%A9%20dos%20Pinhais&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Mapa do endereco da Vilarinho Tech Solutions"
+              ></iframe>
+              <a
+                href="https://www.google.com/maps/place/Tv.+Alcidio+Rocco,+5+-+Afonso+Pena,+S%C3%A3o+Jos%C3%A9+dos+Pinhais+-+PR,+83045-160/@-25.5089168,-49.1897465,17z/data=!4m6!3m5!1s0x94dcf08e5a6ef123:0x9c44dbae2636ffff!8m2!3d-25.5089168!4d-49.1897465!16s%2Fg%2F11jsjp3sfq?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Travessa Alcidio Rocco 5 - Afonso Pena - Sao Jose dos Pinhais
+              </a>
+            </div>
           </div>
 
           <form class="contact-form">
@@ -752,25 +1560,6 @@
       </section>
     </main>
 
-    <section class="qr-section">
-      <div class="container qr-wrap">
-        <h3>Instagram</h3>
-        <p>Escaneie para seguir.</p>
-        <a
-          href="https://www.instagram.com/vilarinho_tech_solutions/"
-          target="_blank"
-          rel="noreferrer"
-          class="qr-card"
-          aria-label="Abrir Instagram da Vilarinho Tech Solutions"
-        >
-          <img
-            src="https://api.qrserver.com/v1/create-qr-code/?size=320x320&color=111111&bgcolor=FFFFFF&data=https%3A%2F%2Fwww.instagram.com%2Fvilarinho_tech_solutions%2F"
-            alt="QR Code do Instagram da Vilarinho Tech Solutions"
-          />
-        </a>
-      </div>
-    </section>
-
     <footer class="footer">
       <div class="container footer-inner">
         <div class="brand-mini">
@@ -781,7 +1570,17 @@
         <nav class="footer-nav">
           <a href="#inicio">Início</a>
           <a href="servicos.html">Serviços</a>
-          <a href="#portfolio">Portfólio</a>
+          <a href="portfolio.html">Portfólio</a>
+          <a href="#orcamento">Orçamento</a>
+          <a href="https://wa.me/5541991443794" target="_blank" rel="noreferrer"
+            >WhatsApp</a
+          >
+          <a
+            href="https://www.instagram.com/vilarinho_tech_solutions/"
+            target="_blank"
+            rel="noreferrer"
+            >Instagram</a
+          >
           <a
             href="#admin"
             class="admin-icon-link admin-login-trigger"
@@ -798,10 +1597,12 @@
           <a href="#contato">Contato</a>
         </nav>
 
-        <p>© 2026 Vilarinho Tech Solutions. Todos os direitos reservados.</p>
-        <p class="footer-dev">
-          Site desenvolvido por Vilarinho Tech Solutions.
-        </p>
+        <div class="footer-meta">
+          <p>© 2026 Vilarinho Tech Solutions. Todos os direitos reservados.</p>
+          <p class="footer-dev">
+            Site desenvolvido por Vilarinho Tech Solutions.
+          </p>
+        </div>
       </div>
     </footer>
 

@@ -533,9 +533,21 @@
       }
 
       @media (max-width: 760px) {
+        .pf-main {
+          padding: 26px 0 52px;
+        }
+
         .pf-topbar-inner {
           flex-direction: column;
           align-items: flex-start;
+        }
+
+        .pf-headline {
+          max-width: 100%;
+        }
+
+        .pf-grid-wrap {
+          padding: 12px 10px;
         }
 
         .pf-toolbar {
@@ -544,18 +556,27 @@
 
         .pf-count {
           grid-column: auto;
+          width: 100%;
+          justify-content: center;
         }
 
         .pf-grid {
           grid-template-columns: 1fr;
+          gap: 12px;
         }
 
         .pf-cover-wrap {
-          height: 196px;
+          height: 204px;
         }
 
         .pf-nav-actions {
           justify-content: flex-start;
+          flex-wrap: wrap;
+        }
+
+        .pf-nav-hint {
+          width: 100%;
+          margin-right: 0;
         }
       }
 
@@ -969,11 +990,7 @@
           : getStoredProjects();
         const seen = new Set();
         return base.filter((item) => {
-          if (
-            item?.is_published === false ||
-            !String(item?.url || "").trim() ||
-            !/^https?:\/\//i.test(String(item?.url || "").trim())
-          ) {
+          if (item?.is_published === false) {
             return false;
           }
 

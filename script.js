@@ -946,7 +946,7 @@ function buildFormIntegrityToken(lines = []) {
 
 function buildDefaultQuickReplyForClient(projectTypeLabel) {
   const typeLabel = formatFieldAnswer(projectTypeLabel, "seu projeto");
-  return `Olá! Recebemos seu formulário com sucesso. Nossa equipe vai analisar os dados e retornar com escopo inicial para ${typeLabel}, prazo estimado e próximos passos.`;
+  return `Olá! Recebemos seu formulário com sucesso. Nossa equipe já iniciou a análise e retornará com escopo inicial para ${typeLabel}, prazo estimado e próximos passos da contratação.`;
 }
 
 function buildWhatsappStructuredMessage(context = {}) {
@@ -983,19 +983,26 @@ function buildWhatsappStructuredMessage(context = {}) {
       .join(", "),
     "Não recomendado",
   );
+  const recommendedRanking = formatFieldAnswer(
+    ranking
+      .slice(0, 3)
+      .map((item, index) => `${index + 1}) ${item.type}`)
+      .join(" | "),
+    "Não recomendado",
+  );
 
   const formLines = [
-    `Nome: ${formName}`,
-    `WhatsApp: ${formWhatsapp}`,
-    `E-mail: ${formEmail}`,
-    `Ramo da empresa: ${formatFieldAnswer(selectedSegment.branch, "Não selecionado")}`,
-    `Segmentação: ${formatFieldAnswer(selectedSegment.name, "Não selecionado")}`,
-    `PDV: ${formatFieldAnswer(selectedSegment.pdv, "Não identificado")}`,
-    `Objetivos: ${formatFieldAnswer(selectedGoalLabels.join(", "), "Não selecionado")}`,
-    `Faixa de investimento: ${formatFieldAnswer(selectedInvestment, "Ainda estou avaliando")}`,
-    `Valor do serviço: ${serviceValueInfo?.label || "Sob consulta"}`,
-    `Tipo de projetos recomendados: ${recommendedTypes}`,
-    `Tipo de projeto escolhido: ${formatFieldAnswer(selectedProjectType || finalType, "Não selecionado")}`,
+    `*Nome*: ${formName}`,
+    `*WhatsApp*: ${formWhatsapp}`,
+    `*E-mail*: ${formEmail}`,
+    `*Ramo da empresa*: ${formatFieldAnswer(selectedSegment.branch, "Não selecionado")}`,
+    `*Segmentação*: ${formatFieldAnswer(selectedSegment.name, "Não selecionado")}`,
+    `*PDV*: ${formatFieldAnswer(selectedSegment.pdv, "Não identificado")}`,
+    `*Objetivos*: ${formatFieldAnswer(selectedGoalLabels.join(", "), "Não selecionado")}`,
+    `*Faixa de investimento*: ${formatFieldAnswer(selectedInvestment, "Ainda estou avaliando")}`,
+    `*Valor do serviço*: ${serviceValueInfo?.label || "Sob consulta"}`,
+    `*Tipo de projetos recomendados*: ${recommendedTypes}`,
+    `*Tipo de projeto escolhido*: ${formatFieldAnswer(selectedProjectType || finalType, "Não selecionado")}`,
   ];
 
   const formIntegrityToken = buildFormIntegrityToken(formLines);
@@ -1004,16 +1011,40 @@ function buildWhatsappStructuredMessage(context = {}) {
   );
 
   return [
+    "*SOLICITAÇÃO DE PROJETO - VILARINHO TECH*",
+    "",
     resumoSolicitacao,
     "",
     "*IMPORTANTE:* Não altere os campos do formulário abaixo para manter a leitura automática da equipe.",
     "",
     "[INICIO_FORMULARIO_VTS]",
-    ...formLines,
+    "------------------------------",
+    "DADOS DO CLIENTE",
+    "------------------------------",
+    `• ${formLines[0]}`,
+    `• ${formLines[1]}`,
+    `• ${formLines[2]}`,
+    "",
+    "------------------------------",
+    "CONTEXTO DO NEGÓCIO",
+    "------------------------------",
+    `• ${formLines[3]}`,
+    `• ${formLines[4]}`,
+    `• ${formLines[5]}`,
+    `• ${formLines[6]}`,
+    `• ${formLines[7]}`,
+    "",
+    "------------------------------",
+    "DIRECIONAMENTO VTS",
+    "------------------------------",
+    `• ${formLines[8]}`,
+    `• ${formLines[9]}`,
+    `• *Ranking recomendado*: ${recommendedRanking}`,
+    `• ${formLines[10]}`,
     `[ASSINATURA_VTS: ${formIntegrityToken}]`,
     "[FIM_FORMULARIO_VTS]",
     "",
-    "*RESPOSTA RÁPIDA PADRÃO (ATENDIMENTO):*",
+    "*RESPOSTA RÁPIDA PADRÃO (ATENDIMENTO)*",
     quickReply,
   ].join("\n");
 }
@@ -1696,7 +1727,7 @@ function escapeHtml(text) {
 }
 
 function isAdminPublishedProject(project) {
-  return project?.is_published !== false && isHttpUrl(project?.url || "");
+  return project?.is_published !== false;
 }
 
 function getPublishedProjects(projects) {
@@ -2820,6 +2851,15 @@ function setupPortfolioMarquee() {
   const marqueeButtons = Array.from(
     document.querySelectorAll("[data-portfolio-marquee]"),
   );
+  const shouldUseStaticGrid = window.matchMedia("(max-width: 820px)").matches;
+
+  if (shouldUseStaticGrid) {
+    marqueeButtons.forEach((button) => {
+      button.disabled = true;
+    });
+    return;
+  }
+
   if (originals.length < 2) {
     marqueeButtons.forEach((button) => {
       button.disabled = true;

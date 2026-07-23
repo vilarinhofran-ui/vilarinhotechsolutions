@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -265,9 +265,150 @@
 
       .pf-card img {
         width: 100%;
-        height: 168px;
+        height: 100%;
         object-fit: cover;
+        object-position: center top;
+        display: block;
+      }
+
+      .pf-cover-wrap {
+        position: relative;
+        height: 184px;
+        overflow: hidden;
         border-bottom: 1px solid var(--line);
+        background:
+          linear-gradient(165deg, rgba(13, 44, 95, 0.74), rgba(5, 22, 55, 0.9)),
+          radial-gradient(
+            circle at 78% 22%,
+            rgba(126, 186, 255, 0.25),
+            transparent 42%
+          );
+      }
+
+      .pf-cover-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          rgba(4, 14, 35, 0) 42%,
+          rgba(4, 14, 35, 0.66)
+        );
+      }
+
+      .pf-cover {
+        transform: scale(1.01);
+        filter: saturate(1.04) contrast(1.02);
+        transition:
+          transform 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+          filter 0.32s ease;
+      }
+
+      .pf-card:hover .pf-cover,
+      .pf-card:focus-within .pf-cover,
+      .pf-card.is-active .pf-cover {
+        transform: scale(1.07);
+        filter: saturate(1.09) contrast(1.03);
+      }
+
+      .pf-card:not(.is-cover-ready) .pf-cover {
+        opacity: 0;
+      }
+
+      .pf-card.is-cover-ready .pf-cover {
+        opacity: 1;
+        transition:
+          opacity 0.42s ease,
+          transform 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+          filter 0.32s ease;
+      }
+
+      .pf-nav-actions {
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .pf-nav-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: color-mix(in srgb, var(--card) 88%, #0f3d8a 12%);
+        color: var(--text);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition:
+          transform 0.22s ease,
+          border-color 0.22s ease,
+          background-color 0.22s ease,
+          box-shadow 0.22s ease;
+      }
+
+      .pf-nav-btn:hover,
+      .pf-nav-btn:focus-visible {
+        transform: translateY(-2px);
+        border-color: color-mix(in srgb, var(--brand) 64%, var(--line) 36%);
+        background: color-mix(in srgb, var(--card) 76%, #1755b8 24%);
+        box-shadow: 0 10px 20px rgba(3, 20, 52, 0.35);
+        outline: none;
+      }
+
+      .pf-nav-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .pf-nav-hint {
+        margin-right: auto;
+        color: color-mix(in srgb, var(--muted) 80%, #97c0f8 20%);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .pf-grid-shell {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .pf-side-nav {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: color-mix(in srgb, var(--card) 88%, #0f3d8a 12%);
+        color: var(--text);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition:
+          transform 0.22s ease,
+          border-color 0.22s ease,
+          background-color 0.22s ease,
+          box-shadow 0.22s ease;
+      }
+
+      .pf-side-nav:hover,
+      .pf-side-nav:focus-visible {
+        transform: translateY(-2px);
+        border-color: color-mix(in srgb, var(--brand) 64%, var(--line) 36%);
+        background: color-mix(in srgb, var(--card) 76%, #1755b8 24%);
+        box-shadow: 0 10px 20px rgba(3, 20, 52, 0.35);
+        outline: none;
+      }
+
+      .pf-side-nav svg {
+        width: 18px;
+        height: 18px;
       }
 
       .pf-card-body {
@@ -377,6 +518,18 @@
         .pf-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+
+        .pf-cover-wrap {
+          height: 172px;
+        }
+
+        .pf-grid-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .pf-side-nav {
+          display: none;
+        }
       }
 
       @media (max-width: 760px) {
@@ -395,6 +548,14 @@
 
         .pf-grid {
           grid-template-columns: 1fr;
+        }
+
+        .pf-cover-wrap {
+          height: 196px;
+        }
+
+        .pf-nav-actions {
+          justify-content: flex-start;
         }
       }
 
@@ -507,7 +668,82 @@
               0 projetos
             </div>
           </div>
-          <div class="pf-grid" id="pf-grid"></div>
+          <div class="pf-nav-actions" aria-label="Navegação entre projetos">
+            <span class="pf-nav-hint">Use setas do teclado para navegar</span>
+            <button
+              class="pf-nav-btn"
+              id="pf-prev"
+              data-pf-nav="prev"
+              type="button"
+              aria-label="Projeto anterior"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M14.5 6.5L9 12l5.5 5.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              class="pf-nav-btn"
+              id="pf-next"
+              data-pf-nav="next"
+              type="button"
+              aria-label="Próximo projeto"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M9.5 6.5L15 12l-5.5 5.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="pf-grid-shell">
+            <button
+              class="pf-side-nav"
+              type="button"
+              data-pf-nav="prev"
+              aria-label="Mover para o projeto anterior"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M14.5 6.5L9 12l5.5 5.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div class="pf-grid" id="pf-grid"></div>
+            <button
+              class="pf-side-nav"
+              type="button"
+              data-pf-nav="next"
+              aria-label="Mover para o próximo projeto"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M9.5 6.5L15 12l-5.5 5.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
     </main>
@@ -526,13 +762,13 @@
         {
           name: "Cartao Digital",
           type: "Cartao Digital",
-          description: "Perfil + botoes + WhatsApp para contato rapido.",
+          description: "Perfil + botões + WhatsApp para contato rápido.",
           url: "",
         },
         {
           name: "Landing Page",
           type: "Landing Page",
-          description: "Headline + oferta + CTA para captacao de leads.",
+          description: "Headline + oferta + CTA para captação de leads.",
           url: "",
         },
         {
@@ -550,31 +786,64 @@
         {
           name: "Sistema Web",
           type: "Sistema Web",
-          description: "Dashboard + processos + relatorios para produtividade.",
+          description: "Dashboard + processos + relatórios para produtividade.",
           url: "",
         },
         {
           name: "Plataforma SaaS",
           type: "Plataforma SaaS",
           description:
-            "Assinatura + area logada para produto digital recorrente.",
+            "Assinatura + área logada para produto digital recorrente.",
           url: "",
         },
         {
           name: "Marketplace",
           type: "Marketplace",
-          description: "Multilojas + pagamentos em uma plataforma unica.",
+          description: "Multilojas + pagamentos em uma plataforma única.",
           url: "",
         },
       ];
 
       function getCoverFromUrl(url) {
         if (!url) {
-          return "assets/logo_.jpg";
+          return "";
         }
 
         const encodedUrl = encodeURIComponent(url);
         return `https://api.microlink.io/?url=${encodedUrl}&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1280&viewport.height=800&scroll=0&waitForTimeout=3000`;
+      }
+
+      function getDefaultCoverByType(type) {
+        const normalized = normalize(type);
+        const byType = {
+          "cartao digital": "assets/servicos/cartao-digital.svg",
+          "landing page": "assets/servicos/landing-page.svg",
+          "site institucional": "assets/servicos/site-institucional.svg",
+          "e-commerce": "assets/servicos/ecommerce.svg",
+          "sistema web": "assets/servicos/sistema-web.svg",
+          "plataforma saas": "assets/servicos/saas.svg",
+          marketplace: "assets/servicos/marketplace.svg",
+          "mentoria pf": "assets/servicos/landing-page.svg",
+          "linkedin pro visibility": "assets/servicos/site-institucional.svg",
+          "linkedin pro visibility pf":
+            "assets/servicos/site-institucional.svg",
+        };
+
+        return byType[normalized] || "assets/logo_.jpg";
+      }
+
+      function getProjectCover(project) {
+        const explicitCover = String(project.coverUrl || "").trim();
+        if (explicitCover) {
+          return explicitCover;
+        }
+
+        const generatedCover = getCoverFromUrl(project.url);
+        if (generatedCover) {
+          return generatedCover;
+        }
+
+        return getDefaultCoverByType(project.type);
       }
 
       function fingerprint(project) {
@@ -698,9 +967,16 @@
         const base = remoteProjects.length
           ? remoteProjects
           : getStoredProjects();
-        const merged = [...base, ...defaultProjects];
         const seen = new Set();
-        return merged.filter((item) => {
+        return base.filter((item) => {
+          if (
+            item?.is_published === false ||
+            !String(item?.url || "").trim() ||
+            !/^https?:\/\//i.test(String(item?.url || "").trim())
+          ) {
+            return false;
+          }
+
           const key = fingerprint(item);
           if (seen.has(key)) {
             return false;
@@ -719,11 +995,28 @@
           `${Math.min(index * 45, 360)}ms`,
         );
 
+        const coverWrap = document.createElement("div");
+        coverWrap.className = "pf-cover-wrap";
+
         const img = document.createElement("img");
-        img.src =
-          String(project.coverUrl || "").trim() || getCoverFromUrl(project.url);
+        img.className = "pf-cover";
+        img.src = getProjectCover(project);
         img.alt = `Capa do projeto ${project.name}`;
         img.loading = "lazy";
+        img.decoding = "async";
+
+        img.addEventListener("load", () => {
+          wrapper.classList.add("is-cover-ready");
+        });
+
+        img.addEventListener("error", () => {
+          if (img.dataset.fallbackApplied === "1") {
+            return;
+          }
+
+          img.dataset.fallbackApplied = "1";
+          img.src = getDefaultCoverByType(project.type);
+        });
 
         const body = document.createElement("div");
         body.className = "pf-card-body";
@@ -754,7 +1047,8 @@
         body.appendChild(desc);
         footer.appendChild(publicStatus);
         body.appendChild(footer);
-        wrapper.appendChild(img);
+        coverWrap.appendChild(img);
+        wrapper.appendChild(coverWrap);
         wrapper.appendChild(body);
 
         return wrapper;
@@ -968,6 +1262,12 @@
         }
 
         const grid = document.getElementById("pf-grid");
+        const prevButtons = Array.from(
+          document.querySelectorAll('[data-pf-nav="prev"]'),
+        );
+        const nextButtons = Array.from(
+          document.querySelectorAll('[data-pf-nav="next"]'),
+        );
         if (!grid) {
           return;
         }
@@ -1034,7 +1334,25 @@
           resetNeighborShift();
         };
 
-        let autoIndex = 0;
+        let activeIndex = 0;
+
+        const activateByIndex = (index, shouldFocus = false) => {
+          const normalizedIndex =
+            ((index % gridCards.length) + gridCards.length) % gridCards.length;
+          const card = gridCards[normalizedIndex];
+          if (!card) {
+            return;
+          }
+
+          activeIndex = normalizedIndex;
+          activateNavigationState(card);
+          card.style.setProperty("--hy", "-8px");
+          card.style.setProperty("--scale", "1.01");
+
+          if (shouldFocus) {
+            card.focus({ preventScroll: true });
+          }
+        };
 
         const stopAutoAnimation = () => {
           window.clearInterval(autoCardTimer);
@@ -1053,11 +1371,7 @@
               return;
             }
 
-            const activeCard = gridCards[autoIndex % gridCards.length];
-            activateNavigationState(activeCard);
-            activeCard.style.setProperty("--hy", "-8px");
-            activeCard.style.setProperty("--scale", "1.01");
-            autoIndex += 1;
+            activateByIndex(activeIndex + 1);
           }, 2400);
         };
 
@@ -1092,11 +1406,13 @@
             card.style.setProperty("--shadow-x", `${shadowX.toFixed(2)}px`);
             card.style.setProperty("--shadow-y", `${shadowY.toFixed(2)}px`);
             activateNavigationState(card);
+            activeIndex = gridCards.indexOf(card);
           });
 
           card.addEventListener("pointerenter", () => {
             stopAutoAnimation();
             activateNavigationState(card);
+            activeIndex = gridCards.indexOf(card);
           });
 
           card.addEventListener("pointerleave", () => {
@@ -1108,6 +1424,7 @@
           card.addEventListener("focusin", () => {
             stopAutoAnimation();
             activateNavigationState(card);
+            activeIndex = gridCards.indexOf(card);
             card.style.setProperty("--scale", "1.012");
             card.style.setProperty("--hy", "-10px");
           });
@@ -1117,6 +1434,49 @@
             clearNavigationState();
             queueAutoResume();
           });
+        });
+
+        prevButtons.forEach((button) => {
+          if (button.dataset.navBound === "1") {
+            return;
+          }
+
+          button.dataset.navBound = "1";
+          button.addEventListener("click", () => {
+            stopAutoAnimation();
+            activateByIndex(activeIndex - 1, true);
+            queueAutoResume();
+          });
+        });
+
+        nextButtons.forEach((button) => {
+          if (button.dataset.navBound === "1") {
+            return;
+          }
+
+          button.dataset.navBound = "1";
+          button.addEventListener("click", () => {
+            stopAutoAnimation();
+            activateByIndex(activeIndex + 1, true);
+            queueAutoResume();
+          });
+        });
+
+        grid.addEventListener("keydown", (event) => {
+          if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+            return;
+          }
+
+          event.preventDefault();
+          stopAutoAnimation();
+
+          if (event.key === "ArrowRight") {
+            activateByIndex(activeIndex + 1, true);
+          } else {
+            activateByIndex(activeIndex - 1, true);
+          }
+
+          queueAutoResume();
         });
 
         startAutoAnimation();

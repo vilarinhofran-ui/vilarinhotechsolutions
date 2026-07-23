@@ -2,6 +2,18 @@
   publish = "."
 
 [[redirects]]
+  from = "http://www.vilarinhotechsolutions.com.br/*"
+  to = "http://vilarinhotechsolutions.com.br/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.vilarinhotechsolutions.com.br/*"
+  to = "https://vilarinhotechsolutions.com.br/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

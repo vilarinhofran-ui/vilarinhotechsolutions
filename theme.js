@@ -6,7 +6,12 @@ function applyTheme(theme) {
 
 (function initThemeToggle() {
   const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-  const initialTheme = savedTheme === "light" ? "light" : "dark";
+  const initialTheme =
+    savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark";
+
+  if (!savedTheme) {
+    localStorage.setItem(THEME_STORAGE_KEY, "dark");
+  }
 
   applyTheme(initialTheme);
 

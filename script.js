@@ -33,6 +33,19 @@ const recommendList = document.getElementById("recommend-list");
 const recommendTemplateCard = document.getElementById(
   "recommend-template-card",
 );
+const recommendProjectPicker = document.getElementById(
+  "recommend-project-picker",
+);
+const recommendSelectedType = document.getElementById(
+  "recommend-selected-type",
+);
+const recommendSuggestedType = document.getElementById(
+  "recommend-suggested-type",
+);
+const recommendationSelectionBox = document.querySelector(
+  ".recommendation-selection-box",
+);
+const budgetResultBox = document.querySelector(".budget-result");
 const ctaWhatsapp = document.getElementById("cta-whatsapp");
 const aiFollowProjectButton = document.getElementById("ai-follow-project");
 const aiChooseOtherButton = document.getElementById("ai-choose-other");
@@ -131,18 +144,22 @@ let selectedCustomCoverDataUrl = "";
 let isManualCoverSelection = false;
 let supabaseClient = null;
 let supabaseRealtimeChannel = null;
+let portfolioMarqueeBoostTimeout = null;
+let recommendationFocusTimeout = null;
+let recommendationReadingTimeout = null;
+let lastRecommendationSnapshot = "";
 
 const defaultProjects = [
   {
     name: "Cartao Digital",
     type: "Cartao Digital",
-    description: "Perfil + botoes + WhatsApp para contato rapido.",
+    description: "Perfil + botões + WhatsApp para contato rápido.",
     url: "",
   },
   {
     name: "Landing Page",
     type: "Landing Page",
-    description: "Headline + oferta + CTA para captacao de leads.",
+    description: "Headline + oferta + CTA para captação de leads.",
     url: "",
   },
   {
@@ -160,19 +177,19 @@ const defaultProjects = [
   {
     name: "Sistema Web",
     type: "Sistema Web",
-    description: "Dashboard + processos + relatorios para produtividade.",
+    description: "Dashboard + processos + relatórios para produtividade.",
     url: "",
   },
   {
     name: "Plataforma SaaS",
     type: "Plataforma SaaS",
-    description: "Assinatura + area logada para produto digital recorrente.",
+    description: "Assinatura + área logada para produto digital recorrente.",
     url: "",
   },
   {
     name: "Marketplace",
     type: "Marketplace",
-    description: "Multilojas + pagamentos em uma plataforma unica.",
+    description: "Multilojas + pagamentos em uma plataforma única.",
     url: "",
   },
 ];
@@ -181,7 +198,7 @@ const goalMap = {
   "vender-online": {
     label: "Vender produtos online",
     title: "Foco em vendas online",
-    text: "Seu objetivo pede uma estrutura voltada para conversao e pagamento facilitado.",
+    text: "Seu objetivo pede uma estrutura voltada para conversão e pagamento facilitado.",
     tips: [
       "Priorize paginas de produto com CTA forte.",
       "Integre meios de pagamento e recuperacao de carrinho.",
@@ -195,7 +212,7 @@ const goalMap = {
     tips: [
       "Crie uma oferta principal com prova de resultado.",
       "Defina uma jornada curta ate o contato comercial.",
-      "Monitore taxa de conversao por campanha e publico.",
+      "Monitore taxa de conversão por campanha e público.",
     ],
   },
   autoridade: {
@@ -204,16 +221,16 @@ const goalMap = {
     text: "Seu projeto deve fortalecer autoridade e confianca para facilitar o fechamento.",
     tips: [
       "Estruture posicionamento com proposta de valor clara.",
-      "Fortaleca identidade visual e consistencia da comunicacao.",
+      "Fortaleça identidade visual e consistência da comunicação.",
       "Publique conteudo tecnico para ampliar confianca da marca.",
     ],
   },
   automatizar: {
     label: "Automatizar processos internos",
     title: "Foco em eficiencia operacional",
-    text: "Voce precisa de recursos para reduzir tarefas manuais e ganhar escala.",
+    text: "Você precisa de recursos para reduzir tarefas manuais e ganhar escala.",
     tips: [
-      "Priorize tarefas repetitivas para ganhos rapidos de produtividade.",
+      "Priorize tarefas repetitivas para ganhos rápidos de produtividade.",
       "Estruture etapas operacionais com responsabilidades claras.",
       "Integre sistemas para reduzir retrabalho entre equipes.",
     ],
@@ -223,14 +240,14 @@ const goalMap = {
     title: "Foco em produto digital",
     text: "O ideal e combinar aquisicao, onboarding e retencao em uma plataforma organizada.",
     tips: [
-      "Valide MVP com paginas de entrada e lista de espera.",
-      "Inclua area logada e metricas de uso.",
+      "Valide MVP com páginas de entrada e lista de espera.",
+      "Inclua área logada e métricas de uso.",
       "Planeje evolucao por versoes com base em dados.",
     ],
   },
   "agendar-atendimentos": {
     label: "Organizar agenda e atendimentos",
-    title: "Foco em agenda e operacao de atendimento",
+    title: "Foco em agenda e operação de atendimento",
     text: "Seu projeto precisa facilitar agendamentos e reduzir faltas com confirmacoes automaticas.",
     tips: [
       "Organize janelas de atendimento para evitar sobrecarga operacional.",
@@ -240,18 +257,18 @@ const goalMap = {
   },
   "suporte-cliente": {
     label: "Melhorar suporte e relacionamento",
-    title: "Foco em experiencia do cliente",
+    title: "Foco em experiência do cliente",
     text: "Centralizar atendimento melhora tempo de resposta e aumenta satisfacao.",
     tips: [
-      "Conecte canais de contato em uma jornada unica.",
-      "Use FAQ estrategico para reduzir duvidas repetitivas.",
+      "Conecte canais de contato em uma jornada única.",
+      "Use FAQ estratégico para reduzir dúvidas repetitivas.",
       "Automatize resposta inicial e distribuicao de tickets.",
     ],
   },
   "escalar-operacao": {
-    label: "Escalar operacao com previsibilidade",
+    label: "Escalar operação com previsibilidade",
     title: "Foco em escala e padronizacao",
-    text: "Para escalar, voce precisa padronizar processos e acompanhar indicadores de desempenho.",
+    text: "Para escalar, você precisa padronizar processos e acompanhar indicadores de desempenho.",
     tips: [
       "Defina etapas padrao para vendas e atendimento.",
       "Crie dashboard com metas, funil e produtividade.",
@@ -260,7 +277,7 @@ const goalMap = {
   },
   "fidelizar-clientes": {
     label: "Aumentar retencao e fidelizacao",
-    title: "Foco em recorrencia e fidelizacao",
+    title: "Foco em recorrência e fidelização",
     text: "Sua estrategia deve aumentar recompra e relacionamento de longo prazo.",
     tips: [
       "Implemente campanhas segmentadas por perfil de cliente.",
@@ -270,12 +287,12 @@ const goalMap = {
   },
   "validar-oferta": {
     label: "Validar nova oferta ou servico",
-    title: "Foco em validacao de mercado",
+    title: "Foco em validação de mercado",
     text: "O projeto deve testar rapidamente interesse real antes de ampliar investimento.",
     tips: [
-      "Monte pagina de validacao com proposta clara.",
+      "Monte página de validação com proposta clara.",
       "Use CTA de pre-cadastro para medir demanda.",
-      "Acompanhe conversao por origem e perfil.",
+      "Acompanhe conversão por origem e perfil.",
     ],
   },
 };
@@ -288,6 +305,8 @@ const recommendationProjectTypes = [
   "Sistema Web",
   "Plataforma SaaS",
   "Marketplace",
+  "Mentoria PF",
+  "LinkedIn Pro Visibility",
 ];
 
 const segmentationsByBusinessBranch = {
@@ -738,19 +757,130 @@ function setAiSuggestionDecision(state) {
     return;
   }
 
+  if (state === "match") {
+    aiDecisionFeedback.textContent =
+      "Prosseguir com match: seleção e recomendação estão alinhadas.";
+    return;
+  }
+
   if (state === "follow") {
     aiDecisionFeedback.textContent =
-      "Escolha registrada: seguir com esse projeto. Vamos para os proximos passos.";
+      "Escolha registrada: seguir recomendação principal.";
     return;
   }
 
   if (state === "switch") {
     aiDecisionFeedback.textContent =
-      "Escolha registrada: avaliar outro projeto recomendado.";
+      "Escolha registrada: manter tipo de projeto selecionado.";
     return;
   }
 
   aiDecisionFeedback.textContent = "Nenhuma acao selecionada ainda.";
+}
+
+function setRecommendationSummary(selectedType, suggestedType) {
+  if (!recommendSuggestedType) {
+    return;
+  }
+
+  if (!suggestedType) {
+    recommendSuggestedType.textContent =
+      "A recomendação automática aparecerá aqui conforme o preenchimento.";
+    return;
+  }
+
+  if (!selectedType) {
+    recommendSuggestedType.textContent = `Recomendação principal: ${suggestedType}.`;
+    return;
+  }
+
+  recommendSuggestedType.textContent = "";
+
+  const selectedLabel = document.createElement("span");
+  selectedLabel.className = "recommend-summary-label";
+  selectedLabel.textContent = "Selecionado:";
+
+  const selectedValue = document.createTextNode(` ${selectedType}`);
+
+  const lineBreak = document.createElement("br");
+
+  const suggestedLabel = document.createElement("span");
+  suggestedLabel.className = "recommend-summary-label";
+  suggestedLabel.textContent = "Recomendação principal:";
+
+  const suggestedValue = document.createTextNode(` ${suggestedType}.`);
+
+  recommendSuggestedType.appendChild(selectedLabel);
+  recommendSuggestedType.appendChild(selectedValue);
+  recommendSuggestedType.appendChild(lineBreak);
+  recommendSuggestedType.appendChild(suggestedLabel);
+  recommendSuggestedType.appendChild(suggestedValue);
+}
+
+function focusRecommendationInterval() {
+  if (!recommendationSelectionBox) {
+    return;
+  }
+
+  const viewportHeight =
+    window.innerHeight || document.documentElement.clientHeight;
+  const rect = recommendationSelectionBox.getBoundingClientRect();
+  const isFullyVisible = rect.top >= 0 && rect.bottom <= viewportHeight;
+
+  if (!isFullyVisible) {
+    recommendationSelectionBox.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }
+
+  recommendationSelectionBox.classList.remove("is-focus-pulse");
+  void recommendationSelectionBox.offsetWidth;
+  recommendationSelectionBox.classList.add("is-focus-pulse");
+
+  const topCard = recommendTemplateCard?.querySelector(
+    ".template-card.is-top-recommended",
+  );
+
+  if (topCard) {
+    topCard.classList.remove("is-cyan-flash");
+    void topCard.offsetWidth;
+    topCard.classList.add("is-cyan-flash");
+  }
+
+  window.clearTimeout(recommendationFocusTimeout);
+  recommendationFocusTimeout = window.setTimeout(() => {
+    recommendationSelectionBox.classList.remove("is-focus-pulse");
+    topCard?.classList.remove("is-cyan-flash");
+  }, 1200);
+}
+
+function triggerRecommendationReadingGuide() {
+  const steps = [
+    recommendSuggestedType,
+    recommendTitle,
+    recommendText,
+    recommendAiExplanation,
+    recommendList,
+  ].filter(Boolean);
+
+  steps.forEach((element, index) => {
+    element.classList.add("recommend-reading-step");
+    element.style.setProperty("--reading-order", String(index));
+  });
+
+  if (!budgetResultBox) {
+    return;
+  }
+
+  budgetResultBox.classList.remove("is-reading-guide");
+  void budgetResultBox.offsetWidth;
+  budgetResultBox.classList.add("is-reading-guide");
+
+  window.clearTimeout(recommendationReadingTimeout);
+  recommendationReadingTimeout = window.setTimeout(() => {
+    budgetResultBox.classList.remove("is-reading-guide");
+  }, 2400);
 }
 
 function formatRankLevel(score) {
@@ -767,7 +897,7 @@ function normalizeWhatsAppValue(value) {
   return digits || raw.trim();
 }
 
-function formatFieldAnswer(value, fallback = "Nao informado") {
+function formatFieldAnswer(value, fallback = "Não informado") {
   const clean = String(value || "").trim();
   return clean || fallback;
 }
@@ -803,6 +933,22 @@ function getServiceValueInfo(serviceType) {
   return valueMap[normalized] || null;
 }
 
+function buildFormIntegrityToken(lines = []) {
+  const payload = lines.join("|\n");
+  let hash = 5381;
+
+  for (let index = 0; index < payload.length; index += 1) {
+    hash = (hash * 33) ^ payload.charCodeAt(index);
+  }
+
+  return `VTS-${(hash >>> 0).toString(16).toUpperCase()}`;
+}
+
+function buildDefaultQuickReplyForClient(projectTypeLabel) {
+  const typeLabel = formatFieldAnswer(projectTypeLabel, "seu projeto");
+  return `Olá! Recebemos seu formulário com sucesso. Nossa equipe vai analisar os dados e retornar com escopo inicial para ${typeLabel}, prazo estimado e próximos passos.`;
+}
+
 function buildWhatsappStructuredMessage(context = {}) {
   const requestedType = String(context.requestedType || "").trim();
   const selectedGoals = getSelectedGoals();
@@ -835,24 +981,40 @@ function buildWhatsappStructuredMessage(context = {}) {
       .slice(0, 3)
       .map((item) => item.type)
       .join(", "),
-    "Nao recomendado",
+    "Não recomendado",
+  );
+
+  const formLines = [
+    `Nome: ${formName}`,
+    `WhatsApp: ${formWhatsapp}`,
+    `E-mail: ${formEmail}`,
+    `Ramo da empresa: ${formatFieldAnswer(selectedSegment.branch, "Não selecionado")}`,
+    `Segmentação: ${formatFieldAnswer(selectedSegment.name, "Não selecionado")}`,
+    `PDV: ${formatFieldAnswer(selectedSegment.pdv, "Não identificado")}`,
+    `Objetivos: ${formatFieldAnswer(selectedGoalLabels.join(", "), "Não selecionado")}`,
+    `Faixa de investimento: ${formatFieldAnswer(selectedInvestment, "Ainda estou avaliando")}`,
+    `Valor do serviço: ${serviceValueInfo?.label || "Sob consulta"}`,
+    `Tipo de projetos recomendados: ${recommendedTypes}`,
+    `Tipo de projeto escolhido: ${formatFieldAnswer(selectedProjectType || finalType, "Não selecionado")}`,
+  ];
+
+  const formIntegrityToken = buildFormIntegrityToken(formLines);
+  const quickReply = buildDefaultQuickReplyForClient(
+    selectedProjectType || finalType,
   );
 
   return [
     resumoSolicitacao,
     "",
-    "*FORMULARIO - RECOMENDADOR*",
-    `*Nome:* ${formName}`,
-    `*WhatsApp:* ${formWhatsapp}`,
-    `*E-mail:* ${formEmail}`,
-    `*Ramo da empresa:* ${formatFieldAnswer(selectedSegment.branch, "Nao selecionado")}`,
-    `*Segmentacao:* ${formatFieldAnswer(selectedSegment.name, "Nao selecionado")}`,
-    `*PDV:* ${formatFieldAnswer(selectedSegment.pdv, "Nao identificado")}`,
-    `*Objetivos:* ${formatFieldAnswer(selectedGoalLabels.join(", "), "Nao selecionado")}`,
-    `*Faixa de investimento:* ${formatFieldAnswer(selectedInvestment, "Ainda estou avaliando")}`,
-    `*Valor do servico:* ${serviceValueInfo?.label || "Sob consulta"}`,
-    `*Tipo de projetos recomendados:* ${recommendedTypes}`,
-    `*Tipo de projeto escolhido:* ${formatFieldAnswer(selectedProjectType || finalType, "Nao selecionado")}`,
+    "*IMPORTANTE:* Não altere os campos do formulário abaixo para manter a leitura automática da equipe.",
+    "",
+    "[INICIO_FORMULARIO_VTS]",
+    ...formLines,
+    `[ASSINATURA_VTS: ${formIntegrityToken}]`,
+    "[FIM_FORMULARIO_VTS]",
+    "",
+    "*RESPOSTA RÁPIDA PADRÃO (ATENDIMENTO):*",
+    quickReply,
   ].join("\n");
 }
 
@@ -1521,16 +1683,7 @@ function dedupeProjects(projects) {
 }
 
 function syncExposedProjectsToAdminPanel() {
-  const stored = getStoredProjects();
-  const exposedProjects = defaultProjects.map((project) => ({
-    ...project,
-    is_published: true,
-  }));
-  const merged = dedupeProjects([...stored, ...exposedProjects]);
-
-  if (merged.length !== stored.length) {
-    saveProjects(merged);
-  }
+  return getStoredProjects();
 }
 
 function escapeHtml(text) {
@@ -1542,8 +1695,12 @@ function escapeHtml(text) {
     .replaceAll("'", "&#39;");
 }
 
+function isAdminPublishedProject(project) {
+  return project?.is_published !== false && isHttpUrl(project?.url || "");
+}
+
 function getPublishedProjects(projects) {
-  return projects.filter((project) => project.is_published !== false);
+  return projects.filter((project) => isAdminPublishedProject(project));
 }
 
 function findStoredProjectIndexByKey(projectKey) {
@@ -1575,7 +1732,7 @@ function loadProjectInEditor(projectKey) {
   );
 
   if (!project) {
-    setAdminManagerFeedback("Projeto nao encontrado para edicao.");
+    setAdminManagerFeedback("Projeto não encontrado para edição.");
     return;
   }
 
@@ -1625,7 +1782,7 @@ function loadProjectInEditor(projectKey) {
     adminCoverUpload.value = "";
   }
   setProjectEditorMode(true);
-  adminFeedback.textContent = "Edicao carregada. Atualize e salve o projeto.";
+  adminFeedback.textContent = "Edição carregada. Atualize e salve o projeto.";
 }
 
 function renderAdminProjectManager() {
@@ -1636,7 +1793,7 @@ function renderAdminProjectManager() {
   const projects = getStoredProjects();
   if (!projects.length) {
     adminProjectManager.innerHTML =
-      "<p>Nenhum projeto cadastrado ainda. Use o formulario para adicionar.</p>";
+      "<p>Nenhum projeto cadastrado ainda. Use o formulário para adicionar.</p>";
     return;
   }
 
@@ -1667,7 +1824,7 @@ function renderAdminProjectManager() {
             <span class="admin-project-status ${statusClass}">${statusLabel}</span>
           </div>
           <p>${escapeHtml(project.type || "Sem tipo")}</p>
-          <p>${escapeHtml(businessContext || "Sem ramo e segmentacao")}</p>
+          <p>${escapeHtml(businessContext || "Sem ramo e segmentação")}</p>
           <p>${escapeHtml(project.url || "Sem URL")}</p>
           <div class="admin-project-inline-controls">
             <label>
@@ -1723,7 +1880,7 @@ async function handleAdminManagerAction(event) {
   );
 
   if (index < 0) {
-    setAdminManagerFeedback("Projeto nao encontrado.");
+    setAdminManagerFeedback("Projeto não encontrado.");
     return;
   }
 
@@ -1764,7 +1921,7 @@ async function handleAdminManagerAction(event) {
       });
     } catch (error) {
       setSupabaseStatus(
-        `Publicacao local aplicada. Falha no sync Supabase: ${error?.message || "erro"}`,
+        `Publicação local aplicada. Falha no sync Supabase: ${error?.message || "erro"}`,
       );
     }
     await renderPortfolio();
@@ -1922,13 +2079,13 @@ function handleForgotPassword() {
 
   const normalizedEmail = informedEmail.trim().toLowerCase();
   if (normalizedEmail !== MASTER_ADMIN_EMAIL) {
-    setAdminLoginFeedback("Email nao autorizado para redefinicao de senha.");
+    setAdminLoginFeedback("Email não autorizado para redefinição de senha.");
     return;
   }
 
   const newPassword = window.prompt("Digite a nova senha do admin:");
   if (!newPassword) {
-    setAdminLoginFeedback("Nova senha nao informada.");
+    setAdminLoginFeedback("Nova senha não informada.");
     return;
   }
 
@@ -1952,7 +2109,7 @@ function handleGoogleAdminContinue() {
   );
 
   if (!informedEmail) {
-    setAdminLoginFeedback("Validacao cancelada.");
+    setAdminLoginFeedback("Validação cancelada.");
     return;
   }
 
@@ -2086,35 +2243,45 @@ function inferSegmentationFromType(type) {
 
 function buildDescriptionFromType(type) {
   const map = {
-    "Cartao Digital": "Entrega contato rapido e presenca online basica.",
-    "Cartão Digital": "Entrega contato rapido e presenca online basica.",
+    "Cartao Digital": "Entrega contato rápido e presença online básica.",
+    "Cartão Digital": "Entrega contato rápido e presença online básica.",
     "Landing Page": "Entrega geracao de leads para campanhas e anuncios.",
-    "Site Institucional": "Entrega autoridade da marca e captacao organica.",
-    "E-commerce": "Entrega vendas online com gestao de produtos e pedidos.",
+    "Site Institucional": "Entrega autoridade da marca e captação orgânica.",
+    "E-commerce": "Entrega vendas online com gestão de produtos e pedidos.",
     "Sistema Web": "Entrega organizacao interna e produtividade da equipe.",
-    "Plataforma SaaS": "Entrega produto digital com recorrencia e escala.",
-    Marketplace: "Entrega ecossistema de vendedores em uma plataforma unica.",
+    "Plataforma SaaS": "Entrega produto digital com recorrência e escala.",
+    Marketplace: "Entrega ecossistema de vendedores em uma plataforma única.",
   };
 
   return map[type] || "Projeto digital publicado no portfolio.";
 }
 
 function buildPortfolioPreview(project) {
-  const parts = [
-    String(project.type || "").trim(),
-    String(project.branch || "").trim(),
-    String(project.segmentation || "").trim(),
-  ].filter(Boolean);
+  const branch = String(project.branch || "").trim();
+  const segmentation = String(project.segmentation || "").trim();
+  const parts = [branch, segmentation].filter(Boolean);
 
-  if (!parts.length) {
-    return "Projeto digital publicado";
+  if (parts.length) {
+    return parts.join(" • ");
   }
 
-  if (parts.length === 1) {
-    return parts[0];
-  }
+  return String(project.type || "").trim() || "Projeto digital publicado";
+}
 
-  return `${parts[0]} • ${parts[1]}${parts[2] ? ` • ${parts[2]}` : ""}`;
+function buildPortfolioLegend(project) {
+  const type = String(project.type || "").trim();
+  const map = {
+    "Cartao Digital": "Canal rápido para captar contatos e oportunidades.",
+    "Cartão Digital": "Canal rápido para captar contatos e oportunidades.",
+    "Site Institucional": "Presença profissional para fortalecer autoridade.",
+    "Sistema Web": "Operação mais produtiva com processos centralizados.",
+    "Plataforma SaaS": "Produto recorrente com base para crescimento contínuo.",
+    Marketplace: "Ecossistema multivendedores para ampliar alcance comercial.",
+  };
+
+  return (
+    map[type] || "Projeto digital com foco em performance e posicionamento."
+  );
 }
 
 function inferDomainFromUrl(urlString) {
@@ -2136,7 +2303,7 @@ function getAdminSegmentationValue() {
 
 function buildCommercialDescriptionFromAdminInput() {
   const name = String(adminName?.value || "").trim() || "Projeto";
-  const type = String(adminType?.value || "").trim() || "solucao digital";
+  const type = String(adminType?.value || "").trim() || "solução digital";
   const branch = String(adminBusinessBranch?.value || "").trim();
   const segmentation = getAdminSegmentationValue();
   const focus = String(adminCommercialFocus?.value || "").trim();
@@ -2145,7 +2312,7 @@ function buildCommercialDescriptionFromAdminInput() {
 
   const contextChunks = [
     branch ? `no ramo de ${branch.toLowerCase()}` : "",
-    segmentation ? `na segmentacao ${segmentation.toLowerCase()}` : "",
+    segmentation ? `na segmentação ${segmentation.toLowerCase()}` : "",
   ].filter(Boolean);
 
   const contextLabel = contextChunks.length
@@ -2153,9 +2320,9 @@ function buildCommercialDescriptionFromAdminInput() {
     : "com posicionamento comercial definido";
   const focusLabel =
     focus ||
-    "fortalecer autoridade, aumentar conversao e acelerar geracao de oportunidades";
+    "fortalecer autoridade, aumentar conversão e acelerar geração de oportunidades";
 
-  return `${type} para ${name}, ${contextLabel}. Solucao pensada para ${focusLabel}, com experiencia objetiva, comunicacao clara de valor e CTA estrategico para transformar visitas em contatos qualificados. Referencia digital: ${domain}.`;
+  return `${type} para ${name}, ${contextLabel}. Solução pensada para ${focusLabel}, com experiência objetiva, comunicação clara de valor e CTA estratégico para transformar visitas em contatos qualificados. Referência digital: ${domain}.`;
 }
 
 function fillProjectFieldsFromUrl() {
@@ -2205,7 +2372,7 @@ function fillProjectFieldsFromUrl() {
 
   if (adminCommercialFocus && !adminCommercialFocus.value.trim()) {
     adminCommercialFocus.value =
-      "aumentar conversao, captar leads e fortalecer autoridade";
+      "aumentar conversão, captar leads e fortalecer autoridade";
   }
 
   if (adminDescription && !adminDescription.value.trim()) {
@@ -2460,7 +2627,7 @@ function handleGenerateAdminDescription() {
   adminDescription.value = buildCommercialDescriptionFromAdminInput();
   if (adminFeedback) {
     adminFeedback.textContent =
-      "Descricao comercial criada com IA local. Revise antes de salvar.";
+      "Descrição comercial criada com IA local. Revise antes de salvar.";
   }
 }
 
@@ -2584,41 +2751,56 @@ function createProjectCard(project) {
   const card = document.createElement("article");
   const cover = document.createElement("img");
   const titleRow = document.createElement("div");
-  const favicon = document.createElement("img");
   const title = document.createElement("h4");
   const preview = document.createElement("div");
+  const legend = document.createElement("p");
   const description = document.createElement("p");
-  const statusBadge = document.createElement("span");
 
   const coverUrl = getProjectCoverUrl(project);
 
   card.className = "project-card template-card portfolio-template-card";
   cover.className = "template-thumb project-cover";
   titleRow.className = "template-title-row";
-  favicon.className = "template-favicon";
   preview.className = "template-preview";
+  legend.className = "project-legend";
   cover.loading = "lazy";
   cover.decoding = "async";
   cover.src = coverUrl;
   cover.alt = `Capa do projeto ${project.name}`;
-  favicon.src = coverUrl;
-  favicon.alt = "";
-  favicon.setAttribute("aria-hidden", "true");
 
   title.textContent = project.name;
-  preview.textContent = buildPortfolioPreview(project);
-  description.textContent = String(project.description || "").trim();
-  statusBadge.className = "project-status-badge";
-  statusBadge.textContent =
-    project.is_published === false ? "Rascunho" : "Projeto publicado";
+  const previewText = buildPortfolioPreview(project);
+  const normalizedPreview = normalizeAscii(previewText);
+  const normalizedName = normalizeAscii(project.name);
+  const normalizedType = normalizeAscii(project.type);
 
-  titleRow.appendChild(favicon);
+  const shouldShowPreview =
+    Boolean(previewText) &&
+    normalizedPreview !== normalizedName &&
+    normalizedPreview !== normalizedType;
+
+  preview.textContent = previewText;
+  preview.hidden = !shouldShowPreview;
+
+  const baseDescription =
+    String(project.description || "").trim() ||
+    buildDescriptionFromType(project.type);
+  const legendText = buildPortfolioLegend(project);
+
+  legend.textContent = legendText;
+  description.textContent =
+    normalizeAscii(baseDescription) === normalizeAscii(legendText)
+      ? buildDescriptionFromType(project.type)
+      : baseDescription;
+
   titleRow.appendChild(title);
   card.appendChild(cover);
   card.appendChild(titleRow);
-  card.appendChild(preview);
+  if (shouldShowPreview) {
+    card.appendChild(preview);
+  }
+  card.appendChild(legend);
   card.appendChild(description);
-  card.appendChild(statusBadge);
   return card;
 }
 
@@ -2635,9 +2817,19 @@ function setupPortfolioMarquee() {
   });
 
   const originals = Array.from(portfolioGrid.querySelectorAll(".project-card"));
+  const marqueeButtons = Array.from(
+    document.querySelectorAll("[data-portfolio-marquee]"),
+  );
   if (originals.length < 2) {
+    marqueeButtons.forEach((button) => {
+      button.disabled = true;
+    });
     return;
   }
+
+  marqueeButtons.forEach((button) => {
+    button.disabled = false;
+  });
 
   originals.forEach((card) => {
     const clone = card.cloneNode(true);
@@ -2655,6 +2847,47 @@ function setupPortfolioMarquee() {
   const duration = Math.max(32, originals.length * 9);
   portfolioGrid.style.setProperty("--marquee-duration", `${duration}s`);
   portfolioGrid.classList.add("is-marquee");
+  setupPortfolioMarqueeControls();
+}
+
+function setupPortfolioMarqueeControls() {
+  if (!portfolioGrid) {
+    return;
+  }
+
+  const buttons = Array.from(
+    document.querySelectorAll("[data-portfolio-marquee]"),
+  );
+  if (!buttons.length) {
+    return;
+  }
+
+  const boost = (direction) => {
+    const animation = portfolioGrid
+      .getAnimations()
+      .find((item) => item.playState !== "finished");
+
+    if (!animation) {
+      return;
+    }
+
+    animation.playbackRate = direction === "prev" ? -3.4 : 3.4;
+    window.clearTimeout(portfolioMarqueeBoostTimeout);
+    portfolioMarqueeBoostTimeout = window.setTimeout(() => {
+      animation.playbackRate = 1;
+    }, 900);
+  };
+
+  buttons.forEach((button) => {
+    if (button.dataset.marqueeBound === "1") {
+      return;
+    }
+
+    button.dataset.marqueeBound = "1";
+    button.addEventListener("click", () => {
+      boost(String(button.dataset.portfolioMarquee || "next"));
+    });
+  });
 }
 
 function renderPortfolioCards(projects) {
@@ -2663,6 +2896,15 @@ function renderPortfolioCards(projects) {
   }
 
   portfolioGrid.innerHTML = "";
+  if (!projects.length) {
+    const empty = document.createElement("div");
+    empty.className = "portfolio-empty";
+    empty.textContent = "Os projetos publicados pelo admin vao aparecer aqui.";
+    portfolioGrid.appendChild(empty);
+    setupPortfolioMarquee();
+    return;
+  }
+
   projects.forEach((project) => {
     portfolioGrid.appendChild(createProjectCard(project));
   });
@@ -2687,6 +2929,7 @@ function updateRecommendation() {
   }
 
   const selectedType = projectType.value;
+  syncRecommendationProjectPicker();
   const selectedGoals = getSelectedGoals();
   const selectedGoalLabels = getGoalLabels(selectedGoals);
   const selectedSegment = getSelectedSegment();
@@ -2700,8 +2943,10 @@ function updateRecommendation() {
     !projectSegmentation.value ||
     !hasValidOtherSegment
   ) {
+    lastRecommendationSnapshot = "";
+    budgetResultBox?.classList.remove("is-reading-guide");
     recommendTitle.textContent =
-      "Selecione segmento e ao menos 1 objetivo para ver a classificacao de projeto.";
+      "Selecione segmento e ao menos 1 objetivo para ver a classificação de projeto.";
     recommendText.textContent = "";
     if (recommendAiExplanation) {
       recommendAiExplanation.textContent = "";
@@ -2710,9 +2955,14 @@ function updateRecommendation() {
     if (recommendTemplateCard) {
       recommendTemplateCard.innerHTML = "";
     }
+    if (recommendSuggestedType) {
+      recommendSuggestedType.textContent = selectedType
+        ? `Projeto escolhido: ${selectedType}. Complete os dados para ver a recomendação automática.`
+        : "A recomendação automática aparecerá aqui conforme o preenchimento.";
+    }
     if (aiSuggestionText) {
       aiSuggestionText.textContent =
-        "Preencha o formulario para receber uma sugestao de caminho.";
+        "Preencha o formulário para receber uma sugestão de caminho.";
     }
     if (aiFollowProjectButton) {
       aiFollowProjectButton.disabled = true;
@@ -2744,17 +2994,22 @@ function updateRecommendation() {
   const suggestedTypes = suggestedRank.map((item) => item.type);
   const suggestedType = suggestedTypes[0] || selectedType;
   const hasSelectedType = Boolean(selectedType);
-  const shouldKeepSelected =
-    hasSelectedType && suggestedTypes.includes(selectedType);
+  const isExactMatch = hasSelectedType && selectedType === suggestedType;
 
   recommendTitle.textContent = `${details.title} para ${selectedSegment.branch} (${selectedSegment.name})`;
   recommendText.textContent = details.text;
   if (recommendAiExplanation) {
-    recommendAiExplanation.textContent = `ANÁLISE VTS VISION: para o ramo ${selectedSegment.branch}, segmentacao ${selectedSegment.name} (PDV ${selectedSegment.pdv}), os objetivos ${selectedGoalLabels.join(", ").toLowerCase()} apontam esta classificacao de tipo de projeto.`;
+    recommendAiExplanation.textContent = `ANÁLISE VTS VISION: para o ramo ${selectedSegment.branch}, segmentação ${selectedSegment.name} (PDV ${selectedSegment.pdv}), os objetivos ${selectedGoalLabels.join(", ").toLowerCase()} apontam esta classificação de tipo de projeto.`;
+  }
+  if (recommendSuggestedType) {
+    setRecommendationSummary(selectedType, suggestedType);
   }
   recommendList.innerHTML = suggestedRank
     .slice(0, 3)
-    .map((item) => `<li>${item.type}</li>`)
+    .map(
+      (item, index) =>
+        `<li class="recommend-rank-item" style="--rank-order:${index};"><strong>${index + 1}.</strong> ${item.type}</li>`,
+    )
     .join("");
 
   if (recommendTemplateCard) {
@@ -2781,29 +3036,47 @@ function updateRecommendation() {
       }
       recommendTemplateCard.appendChild(clone);
     });
+
+    bindRecommendationCardButtons(suggestedRank);
   }
 
   if (aiSuggestionText) {
     if (!hasSelectedType) {
-      aiSuggestionText.textContent = `Sugestao automatizada: tipo mais recomendado agora e ${suggestedType}.`;
+      aiSuggestionText.textContent = `Sugestão automatizada: o tipo mais recomendado agora é ${suggestedType}.`;
+    } else if (isExactMatch) {
+      aiSuggestionText.textContent = `Prosseguir com match: ${selectedType}.`;
     } else {
-      aiSuggestionText.textContent = shouldKeepSelected
-        ? `Seu tipo selecionado esta bem posicionado no ranking. Recomendacao: seguir com ${selectedType}.`
-        : `Sugestao automatizada: para seu contexto, considere migrar de ${selectedType} para ${suggestedType}.`;
+      aiSuggestionText.textContent = `Tipo selecionado: ${selectedType}. Recomendação principal: ${suggestedType}. Escolha manter o tipo de projeto ou seguir a recomendação.`;
     }
   }
 
   if (aiFollowProjectButton) {
     aiFollowProjectButton.disabled = !suggestedType;
     aiFollowProjectButton.dataset.suggestedType = suggestedType;
+    aiFollowProjectButton.textContent = isExactMatch
+      ? "Prosseguir com match"
+      : `Seguir recomendação: ${suggestedType}`;
   }
 
   if (aiChooseOtherButton) {
-    aiChooseOtherButton.disabled = !hasSelectedType || shouldKeepSelected;
+    aiChooseOtherButton.disabled = !hasSelectedType || isExactMatch;
     aiChooseOtherButton.dataset.suggestedType = suggestedType;
+    aiChooseOtherButton.textContent = hasSelectedType
+      ? `Manter tipo de projeto: ${selectedType}`
+      : "Manter tipo de projeto";
   }
 
-  setAiSuggestionDecision("idle");
+  setAiSuggestionDecision(isExactMatch ? "match" : "idle");
+
+  const recommendationSnapshot = `${selectedType}|${suggestedType}|${suggestedRank
+    .map((item) => item.type)
+    .join("|")}`;
+
+  if (recommendationSnapshot !== lastRecommendationSnapshot) {
+    focusRecommendationInterval();
+    triggerRecommendationReadingGuide();
+    lastRecommendationSnapshot = recommendationSnapshot;
+  }
 
   const message = buildWhatsappStructuredMessage({
     requestedType: hasSelectedType ? selectedType : suggestedType,
@@ -2871,7 +3144,7 @@ function setupGoalPickerBehaviour() {
       if (selectedCount > maxGoals) {
         input.checked = false;
         updateGoalState(
-          `Voce pode selecionar no maximo ${maxGoals} objetivos.`,
+          `Você pode selecionar no máximo ${maxGoals} objetivos.`,
         );
         return;
       }
@@ -2914,7 +3187,7 @@ function setupSegmentFieldBehaviour() {
     const placeholder = document.createElement("option");
     placeholder.value = "";
     placeholder.textContent = options.length
-      ? "Selecione a segmentacao"
+      ? "Selecione a segmentação"
       : "Sem lista para este ramo";
     projectSegmentation.appendChild(placeholder);
 
@@ -2974,47 +3247,150 @@ function setupRecommendationDecisionActions() {
       const suggested = String(
         aiFollowProjectButton.dataset.suggestedType || "",
       );
-      if (suggested && projectType) {
+      const selected = String(projectType?.value || "");
+
+      if (suggested && projectType && selected !== suggested) {
         projectType.value = suggested;
         updateRecommendation();
+        setAiSuggestionDecision("follow");
+        return;
       }
-      setAiSuggestionDecision("follow");
+
+      setAiSuggestionDecision("match");
     });
   }
 
   if (aiChooseOtherButton) {
     aiChooseOtherButton.addEventListener("click", () => {
-      const suggested = String(aiChooseOtherButton.dataset.suggestedType || "");
-      if (!suggested || !projectType) {
+      if (!projectType || !projectType.value) {
         return;
       }
 
-      const candidate = Array.from(projectType.options).find(
-        (option) => option.value === suggested,
-      );
-
-      if (!candidate) {
-        return;
-      }
-
-      projectType.value = suggested;
       setAiSuggestionDecision("switch");
       updateRecommendation();
     });
   }
 }
 
+function syncRecommendationProjectPicker() {
+  if (!recommendProjectPicker || !projectType) {
+    return;
+  }
+
+  const radios = Array.from(
+    recommendProjectPicker.querySelectorAll(
+      'input[name="recommend-project-type"]',
+    ),
+  );
+
+  radios.forEach((radio) => {
+    radio.checked = radio.value === projectType.value;
+  });
+
+  if (recommendSelectedType) {
+    recommendSelectedType.textContent =
+      projectType.value || "Nenhum selecionado";
+  }
+}
+
+function buildRecommendationProjectPicker() {
+  if (!recommendProjectPicker || !projectType) {
+    return;
+  }
+
+  recommendProjectPicker.innerHTML = "";
+
+  Array.from(projectType.options)
+    .filter((option) => option.value)
+    .forEach((option) => {
+      const label = document.createElement("label");
+      label.className = "recommend-project-option";
+
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "recommend-project-type";
+      input.value = option.value;
+
+      const text = document.createElement("span");
+      text.textContent = option.textContent;
+
+      input.addEventListener("change", () => {
+        if (!input.checked) {
+          return;
+        }
+
+        projectType.value = input.value;
+        updateRecommendation();
+      });
+
+      label.appendChild(input);
+      label.appendChild(text);
+      recommendProjectPicker.appendChild(label);
+    });
+
+  syncRecommendationProjectPicker();
+}
+
+function focusBudgetSection() {
+  const budgetSection = document.getElementById("orcamento");
+  budgetSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function applySelectedProjectType(type) {
+  if (!projectType || !type) {
+    return;
+  }
+
+  const candidate = Array.from(projectType.options).find(
+    (option) => option.value === type,
+  );
+
+  if (!candidate) {
+    return;
+  }
+
+  projectType.value = type;
+  syncRecommendationProjectPicker();
+  updateRecommendation();
+}
+
+function bindRecommendationCardButtons(rankedTypes = []) {
+  if (!recommendTemplateCard) {
+    return;
+  }
+
+  const buttons = Array.from(
+    recommendTemplateCard.querySelectorAll(".template-card .btn"),
+  );
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const card = button.closest(".template-card");
+      const requestedType = String(
+        card?.getAttribute("data-template-type") || projectType?.value || "",
+      ).trim();
+
+      if (requestedType) {
+        projectType.value = requestedType;
+        syncRecommendationProjectPicker();
+      }
+
+      const message = buildWhatsappStructuredMessage({
+        requestedType: requestedType || String(projectType?.value || "").trim(),
+        ranking: rankedTypes,
+      });
+
+      openWhatsappWithMessage(message);
+    });
+  });
+}
+
 function setupServiceRequestButtons() {
   if (!serviceRequestButtons.length) {
     return;
   }
-
-  const directRedirectByType = {
-    "Mentoria PF":
-      "https://vilarinhofran-ui.github.io/Mentoria-Vilarinho-Tech/mentoria.index.html#investir",
-    "LinkedIn Pro Visibility":
-      "https://vilarinhofran-ui.github.io/Mentoria-Vilarinho-Tech/index.html",
-  };
 
   serviceRequestButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -3023,21 +3399,10 @@ function setupServiceRequestButtons() {
         card?.getAttribute("data-template-type") || "",
       ).trim();
 
-      const directRedirect = directRedirectByType[templateType];
-      if (directRedirect) {
-        event.preventDefault();
-        window.open(directRedirect, "_blank", "noopener,noreferrer");
-        return;
-      }
-
       event.preventDefault();
-
-      const message = buildWhatsappStructuredMessage({
-        requestedType: templateType,
-        serviceValueInfo: getServiceValueInfo(templateType),
-      });
-
-      openWhatsappWithMessage(message);
+      applySelectedProjectType(templateType);
+      focusBudgetSection();
+      projectBusinessBranch?.focus({ preventScroll: true });
     });
   });
 }
@@ -3072,7 +3437,7 @@ async function handleAdminSubmit(event) {
   const rawUrl = String(adminUrl?.value || "").trim();
   if (!rawUrl) {
     adminFeedback.textContent =
-      "Informe a URL do projeto para cadastrar como na referencia anterior.";
+      "Informe a URL do projeto para cadastrar como na referência anterior.";
     adminUrl?.focus();
     return;
   }
@@ -3127,7 +3492,7 @@ async function handleAdminSubmit(event) {
 
   if (!name || !type || !description || !url) {
     adminFeedback.textContent =
-      "Nao foi possivel gerar os dados do projeto. Revise a URL e tente novamente.";
+      "Não foi possível gerar os dados do projeto. Revise a URL e tente novamente.";
     return;
   }
 
@@ -3146,7 +3511,7 @@ async function handleAdminSubmit(event) {
   if (editingProjectKey) {
     const editIndex = findStoredProjectIndexByKey(editingProjectKey);
     if (editIndex < 0) {
-      adminFeedback.textContent = "Projeto em edicao nao foi encontrado.";
+      adminFeedback.textContent = "Projeto em edição não foi encontrado.";
       editingProjectKey = null;
       setProjectEditorMode(false);
       return;
@@ -3511,8 +3876,6 @@ function setupKeyboardShortcuts() {
 }
 
 async function setupAdminPanelLocal() {
-  syncExposedProjectsToAdminPanel();
-
   const hasSession = hasAdminSession();
   if (hasSession) {
     // Keep admin-only mode consistent: authenticated users always land on admin panel.
@@ -3557,8 +3920,13 @@ async function setupAdminPanelLocal() {
 }
 
 if (projectType) {
-  projectType.addEventListener("change", updateRecommendation);
+  projectType.addEventListener("change", () => {
+    syncRecommendationProjectPicker();
+    updateRecommendation();
+  });
 }
+
+buildRecommendationProjectPicker();
 
 if (clientName) {
   clientName.addEventListener("input", updateRecommendation);

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -183,7 +183,7 @@
               ></path>
             </svg>
           </span>
-          <input type="checkbox" id="theme-toggle-input" checked />
+          <input type="checkbox" id="theme-toggle-input" />
           <span class="theme-toggle-track" aria-hidden="true"
             ><span class="theme-toggle-thumb"></span
           ></span>
@@ -204,7 +204,7 @@
         <div class="bg-shape bg-shape-b"></div>
         <div class="container hero-grid">
           <div>
-            <p class="tag">+50 negócios já transformados • Nota média 4,9/5</p>
+           
             <h1>Seu site profissional pronto em 7 dias, vende todo dia.</h1>
             <p class="subtitle">
               Design, hospedagem e suporte em um pacote direto ao ponto.
@@ -307,9 +307,9 @@
           <div class="about-copy">
             <p class="section-label">Problema e Solução</p>
             <h2 class="about-headline">
-              <span id="about-headline-primary">Você vende com foco.</span>
+              <span id="about-headline-primary">Você foca no seu negócio.</span>
               <span id="about-headline-accent"
-                >A gente resolve o restante.</span
+                >A gente impulsiona seus resultados.</span
               >
             </h2>
             <p>Menos complexidade, mais resultado.</p>
@@ -414,18 +414,55 @@
 
             <div class="company-badges">
               <article class="company-badge">
-                <span class="company-icon" aria-hidden="true">IU</span>
+                <img
+                  src="https://www.google.com/s2/favicons?domain=itau.com.br&sz=128"
+                  alt="Itaú Unibanco"
+                  class="company-logo"
+                />
                 <strong>Itaú Unibanco</strong>
               </article>
+
               <article class="company-badge">
-                <span class="company-icon" aria-hidden="true">GB</span>
+                <img
+                  src="https://www.google.com/s2/favicons?domain=grupoboticario.com.br&sz=128"
+                  alt="Grupo Boticário"
+                  class="company-logo"
+                />
                 <strong>Grupo Boticário</strong>
               </article>
-              <article class="company-badge">
-                <span class="company-icon" aria-hidden="true">FAE</span>
-                <strong>FAE Centro Universitário</strong>
+
+             <div class="company-badges">
+              <article class="company-badge education">
+                <img
+                  src="assets/fae logo.jpg"
+                  alt="FAE Centro Universitário"
+                  class="company-logo"
+                  loading="lazy"
+                />
+
+                <div class="company-info">
+                  <span class="company-label">Instituição de Ensino</span>
+                  <strong>FAE Centro Universitário</strong>
+                  <small>Graduação reconhecida pelo MEC</small>
+                </div>
               </article>
-            </div>
+
+              <article class="company-badge education">
+               <img
+              src="https://api.iconify.design/material-symbols/school-rounded.svg?color=%230A2540"
+              alt="Perfil Profissional"
+              class="company-logo"
+              loading="lazy"
+
+            />
+
+                  <div class="company-info">
+                    <span class="company-label">Formação Acadêmica</span>
+                    <strong>Bacharel em Administração</strong>
+                    <small>Gestão • Estratégia • Negócios</small>
+                  </div>
+                </article>
+              </div>
           </article>
         </div>
       </section>
@@ -433,7 +470,7 @@
       <section class="section alt section-reveal">
         <div class="container">
           <p class="section-label">Como Funciona</p>
-          <h2>Você fala. A gente cria. Seu cliente compra.</h2>
+          <h2>Etapas do Processo</h2>
           <div class="steps-grid">
             <article>
               <strong>1.</strong>
@@ -473,18 +510,16 @@
 
           <div class="reference-metrics">
             <article>
-              <strong>50+</strong>
-              <span>Projetos entregues com acompanhamento real</span>
+              <strong>100%</strong>
+              <span>Desenvolvimento personalizado para cada negócio</span>
             </article>
             <article>
               <strong>Semanal</strong>
               <span>Ciclos de revisão e melhoria contínua</span>
             </article>
             <article>
-              <strong>100%</strong>
-              <span
-                >Visibilidade sobre status, prioridades e próximos passos</span
-              >
+              <strong>Direto com o Dev</strong>
+              <span>Você conversa com quem projeta, desenvolve e entrega a solução.</span>
             </article>
             <article>
               <strong>7 dias</strong>
@@ -682,20 +717,20 @@
               <img
                 class="template-thumb"
                 src="assets/servicos/landing-page.svg"
-                alt="Prévia visual de Mentoria Pessoa Fisica"
+                alt="Prévia visual de Mentoria Pessoa Física"
               />
               <div class="template-title-row">
                 <img
                   class="template-favicon"
                   src="assets/servicos/landing-page.svg"
-                  alt="Favicon Mentoria Pessoa Fisica"
+                  alt="Favicon Mentoria Pessoa Física"
                 />
                 <h4>Mentoria PF</h4>
               </div>
-              <div class="template-preview">Plano + Direcao + Execucao</div>
+              <div class="template-preview">Plano + Direção + Execução</div>
               <p>
-                Entrega orientacao estrategica para pessoa fisica construir sua
-                presenca digital com clareza.
+                Entrega orientação estratégica para pessoa física construir sua
+                presença digital com clareza.
               </p>
               <a
                 href="https://vilarinhofran-ui.github.io/Mentoria-Vilarinho-Tech/mentoria.index.html#investir"
@@ -745,8 +780,44 @@
         <div class="container">
           <p class="section-label">Portfólio</p>
           <h2>Projetos que entregam valor.</h2>
-          <div class="portfolio-marquee">
-            <div class="portfolio-grid" id="portfolio-grid"></div>
+          <div class="portfolio-marquee-shell">
+            <button
+              class="portfolio-marquee-nav portfolio-marquee-nav-prev"
+              type="button"
+              aria-label="Acelerar para a esquerda"
+              data-portfolio-marquee="prev"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M14.5 6.5L9 12l5.5 5.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div class="portfolio-marquee">
+              <div class="portfolio-grid" id="portfolio-grid"></div>
+            </div>
+            <button
+              class="portfolio-marquee-nav portfolio-marquee-nav-next"
+              type="button"
+              aria-label="Acelerar para a direita"
+              data-portfolio-marquee="next"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M9.5 6.5L15 12l-5.5 5.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </section>
@@ -754,7 +825,7 @@
       <section class="section section-reveal">
         <div class="container">
           <p class="section-label">Prova Social</p>
-          <h2>Mais de 50 negócios já transformados.</h2>
+          <h2>Cada solução é desenvolvida sob medida para a realidade e os objetivos de cada negócio.</h2>
           <div class="testimonials">
             <blockquote>
               "Comecei a receber pedidos em poucos dias."
@@ -814,7 +885,7 @@
                 <input
                   id="client-email"
                   type="email"
-                  placeholder="voce@email.com"
+                  placeholder="você@email.com"
                   autocomplete="email"
                 />
               </label>
@@ -822,8 +893,8 @@
               <label>
                 Qual e a faixa de investimento prevista para este projeto?
                 <small class="segment-helper"
-                  >Essa informacao nos ajuda a recomendar a solucao mais
-                  adequada as suas necessidades e objetivos.</small
+                  >Essa informação nos ajuda a recomendar a solução mais
+                  adequada às suas necessidades e objetivos.</small
                 >
                 <select id="project-investment-range">
                   <option value="Ainda estou avaliando">
@@ -845,7 +916,7 @@
               <label>
                 Ramo da empresa
                 <small class="segment-helper"
-                  >Escolha o ramo principal para carregar a lista de segmentacao
+                  >Escolha o ramo principal para carregar a lista de segmentação
                   correspondente.</small
                 >
                 <select id="project-business-branch" required>
@@ -894,11 +965,11 @@
               <label>
                 Segmentação
                 <small class="segment-helper"
-                  >A lista muda de acordo com o ramo escolhido. Se nao
+                  >A lista muda de acordo com o ramo escolhido. Se não
                   encontrar, selecione Outro e descreva.</small
                 >
                 <select id="project-segmentation" required>
-                  <option value="">Selecione a segmentacao</option>
+                  <option value="">Selecione a segmentação</option>
                   <option value="Outro">Outro</option>
                 </select>
               </label>
@@ -1016,6 +1087,10 @@
                   <option value="Sistema Web">Sistema Web</option>
                   <option value="Plataforma SaaS">Plataforma SaaS</option>
                   <option value="Marketplace">Marketplace</option>
+                  <option value="Mentoria PF">Mentoria PF</option>
+                  <option value="LinkedIn Pro Visibility">
+                    LinkedIn Pro Visibility PF
+                  </option>
                 </select>
               </label>
 
@@ -1028,11 +1103,56 @@
               >
                 Solicitar serviço
               </a>
+              <small class="whatsapp-structure-note" role="note">
+                Formulário enviado em formato padronizado para triagem automática.
+                Não edite os campos para manter a leitura da equipe.
+              </small>
             </form>
           </div>
 
           <aside class="budget-result">
             <h3>Recomendação para seu objetivo</h3>
+            <div class="recommendation-selection-box">
+              <div class="recommendation-selection-head">
+                <strong>Projeto selecionado pelo cliente</strong>
+                <span id="recommend-selected-type">Nenhum selecionado</span>
+              </div>
+              <div
+                id="recommend-project-picker"
+                class="recommend-project-picker"
+                aria-label="Selecionar tipo de projeto"
+              ></div>
+              <small id="recommend-suggested-type"
+                >A recomendação automática aparecerá aqui conforme o preenchimento.</small
+              >
+            </div>
+            <div class="ai-suggestion-box" id="ai-suggestion-box">
+              <h4>Escolha o caminho do projeto</h4>
+              <p id="ai-suggestion-text">
+                Preencha o formulário para receber uma sugestão de caminho.
+              </p>
+              <div class="ai-suggestion-actions">
+                <button
+                  type="button"
+                  class="btn"
+                  id="ai-choose-other"
+                  disabled
+                >
+                  Manter tipo de projeto
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-ghost"
+                  id="ai-follow-project"
+                  disabled
+                >
+                  Seguir recomendação
+                </button>
+              </div>
+              <small id="ai-decision-feedback"
+                >Nenhuma ação selecionada ainda.</small
+              >
+            </div>
             <p id="recommend-title">
               Selecione segmento e objetivos para ver a classificação
               automática.
@@ -1048,49 +1168,51 @@
             <div class="payment-methods">
               <h4>Formas de pagamento</h4>
               <div class="payment-chips">
-                <span class="payment-chip">
+                <span class="payment-chip payment-chip-debit">
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <rect
-                      x="2.5"
+                      x="3"
                       y="5"
-                      width="19"
+                      width="18"
                       height="14"
-                      rx="2"
+                      rx="3"
                       fill="none"
                       stroke="currentColor"
                       stroke-width="1.6"
                     />
                     <path
-                      d="M2.5 10.2h19"
+                      d="M3 10h18M7 15h4"
                       fill="none"
                       stroke="currentColor"
                       stroke-width="1.6"
+                      stroke-linecap="round"
                     />
                   </svg>
-                  Debito
+                  Débito
                 </span>
-                <span class="payment-chip">
+                <span class="payment-chip payment-chip-credit">
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <rect
-                      x="2.5"
+                      x="3"
                       y="5"
-                      width="19"
+                      width="18"
                       height="14"
-                      rx="2"
+                      rx="3"
                       fill="none"
                       stroke="currentColor"
                       stroke-width="1.6"
                     />
                     <path
-                      d="M2.5 10.2h19"
+                      d="M3 10h18M15 15h2.5M10.5 15h2.5"
                       fill="none"
                       stroke="currentColor"
                       stroke-width="1.6"
+                      stroke-linecap="round"
                     />
                   </svg>
-                  Credito
+                  Crédito
                 </span>
-                <span class="payment-chip">
+                <span class="payment-chip payment-chip-pix">
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path
                       d="M8.1 8.1l3.9-3.9 3.9 3.9-3.9 3.9-3.9-3.9zM8.1 15.9L12 12l3.9 3.9-3.9 3.9-3.9-3.9z"
@@ -1102,12 +1224,28 @@
                   </svg>
                   Pix
                 </span>
+                <span class="payment-chip payment-chip-provider">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M4.5 12c1.4-2.4 3-3.6 4.8-3.6 3 0 3.7 7.2 6.7 7.2 1.3 0 2.5-.8 3.5-2.4M19.5 12c-1.4 2.4-3 3.6-4.8 3.6-3 0-3.7-7.2-6.7-7.2-1.3 0-2.5.8-3.5 2.4"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  InfinityPay
+                </span>
               </div>
               <div class="card-flags" aria-label="Bandeiras de cartao aceitas">
-                <span class="card-flag"><i>V</i> Visa</span>
-                <span class="card-flag"><i>MC</i> Mastercard</span>
-                <span class="card-flag"><i>E</i> Elo</span>
-                <span class="card-flag"><i>H</i> Hipercard</span>
+                <span class="card-flag card-flag-visa">
+                  <i aria-hidden="true"></i>
+                  Visa
+                </span>
+                <span class="card-flag card-flag-mastercard">
+                  <i aria-hidden="true"></i>
+                  Mastercard
+                </span>
               </div>
             </div>
           </aside>
@@ -1165,7 +1303,7 @@
         <div class="container">
           <p class="section-label">Painel do Desenvolvedor</p>
           <h2>Projetos do Portfólio</h2>
-          <p>Gerencie a vitrine de projetos com preenchimento rapido.</p>
+          <p>Gerencie a vitrine de projetos com preenchimento rápido.</p>
 
           <div class="admin-access-row">
             <small>Sessao autenticada para gerenciamento do site.</small>
@@ -1185,7 +1323,7 @@
             </div>
             <p>
               Conecte o banco para publicar projetos em tempo real no portfolio
-              publico com backup local automatico.
+              público com backup local automático.
             </p>
             <div class="admin-supabase-grid">
               <label>
@@ -1517,7 +1655,7 @@
               <input
                 type="email"
                 name="email"
-                placeholder="voce@email.com"
+                    placeholder="você@email.com"
                 data-redirect-url="https://www.instagram.com/vilarinho_tech_solutions/"
             /></label>
             <label>

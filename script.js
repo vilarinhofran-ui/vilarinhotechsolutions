@@ -1,11 +1,27 @@
-const menuToggle = document.getElementById("menu-toggle");
-const menu = document.getElementById("menu");
-const menuLinks = document.querySelectorAll(".nav a");
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector(".nav");
 const urgentBar = document.querySelector(".urgent-bar");
 const aboutHeadline = document.querySelector(".about-headline");
 const aboutHeadlinePrimary = document.getElementById("about-headline-primary");
 const aboutHeadlineAccent = document.getElementById("about-headline-accent");
 
+if (menuToggle && nav) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = nav.classList.toggle("open");
+    nav.classList.toggle("active", isOpen);
+    menuToggle.classList.toggle("active", isOpen);
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+}
+
+document.querySelectorAll(".nav a").forEach((link) => {
+  link.addEventListener("click", () => {
+    menuToggle.classList.remove("active");
+    nav.classList.remove("active");
+    nav.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+  });
+});
 const projectType = document.getElementById("project-type");
 const clientName = document.getElementById("client-name");
 const clientWhatsapp = document.getElementById("client-whatsapp");
@@ -117,6 +133,10 @@ const supabaseTableInput = document.getElementById("supabase-table");
 const supabaseBucketInput = document.getElementById("supabase-bucket");
 const supabaseConnectButton = document.getElementById("supabase-connect");
 const supabaseSyncNowButton = document.getElementById("supabase-sync-now");
+const supabaseSyncViewsInput = document.getElementById("supabase-sync-views");
+const supabaseSyncViewsButton = document.getElementById(
+  "supabase-sync-views-now",
+);
 const supabaseDisconnectButton = document.getElementById("supabase-disconnect");
 const supabaseStatus = document.getElementById("supabase-status");
 
@@ -148,6 +168,9 @@ let portfolioMarqueeBoostTimeout = null;
 let recommendationFocusTimeout = null;
 let recommendationReadingTimeout = null;
 let lastRecommendationSnapshot = "";
+const portfolioSyncChannel = window.BroadcastChannel
+  ? new BroadcastChannel("vts-portfolio-sync")
+  : null;
 
 const defaultProjects = [
   {
@@ -192,6 +215,38 @@ const defaultProjects = [
     description: "Multilojas + pagamentos em uma plataforma única.",
     url: "",
   },
+  {
+    name: "Empadisa Cafe",
+    type: "Site Institucional",
+    description:
+      "Site institucional para cafeteria, com identidade acolhedora e contato direto.",
+    url: "https://empadisa-cafe.netlify.app/",
+    status: "published",
+  },
+  {
+    name: "Espaco Viver com Leveza",
+    type: "Site Institucional",
+    description:
+      "Presenca digital para bem-estar, apresentando servicos e canais de atendimento.",
+    url: "https://espacovivercomleveza.netlify.app/",
+    status: "published",
+  },
+  {
+    name: "PS Barbearia Vintage",
+    type: "Landing Page",
+    description:
+      "Landing page para barbearia com visual marcante e foco em agendamentos.",
+    url: "https://ps-barbearia-vintage.netlify.app/",
+    status: "published",
+  },
+  {
+    name: "JRS Construcao e Reformas",
+    type: "Site Institucional",
+    description:
+      "Site institucional para construcao e reformas, com portfolio de servicos e contato rapido.",
+    url: "https://jrs-construcaoereformas.netlify.app/",
+    status: "published",
+  },
 ];
 
 const goalMap = {
@@ -207,11 +262,11 @@ const goalMap = {
   },
   "captar-leads": {
     label: "Gerar leads e captar clientes",
-    title: "Foco em geracao de leads",
-    text: "Uma jornada curta com oferta clara tende a gerar mais contatos qualificados.",
+    title: "Foco em geração de leads",
+    text: "Seu projeto precisa facilitar o contato e transformar visitas em oportunidades.",
     tips: [
-      "Crie uma oferta principal com prova de resultado.",
-      "Defina uma jornada curta ate o contato comercial.",
+      "Crie uma oferta objetiva e CTA visível.",
+      "Use formulário curto e WhatsApp integrado.",
       "Monitore taxa de conversão por campanha e público.",
     ],
   },
@@ -1856,7 +1911,10 @@ function renderAdminProjectManager() {
           </div>
           <p>${escapeHtml(project.type || "Sem tipo")}</p>
           <p>${escapeHtml(businessContext || "Sem ramo e segmentação")}</p>
-          <p>${escapeHtml(project.url || "Sem URL")}</p>
+          <label class="admin-project-url-field">
+            URL do projeto publicado
+            <input type="url" value="${escapeHtml(project.url || "")}" readonly aria-label="URL publicada de ${escapeHtml(project.name || "Projeto")}" />
+          </label>
           <div class="admin-project-inline-controls">
             <label>
               Ordem
@@ -1874,6 +1932,7 @@ function renderAdminProjectManager() {
           </div>
           <div class="admin-project-actions">
             <button type="button" class="btn btn-ghost btn-sm" data-action="edit" data-key="${escapeHtml(key)}">Editar</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-action="visit" data-key="${escapeHtml(key)}" ${isHttpUrl(project.url) ? "" : "disabled"}>Ver projeto publicado</button>
             <button type="button" class="btn btn-ghost btn-sm" data-action="publish" data-key="${escapeHtml(key)}">Publicar</button>
             <button type="button" class="btn btn-ghost btn-sm" data-action="toggle" data-key="${escapeHtml(key)}">${
               isActive ? "Desativar" : "Ativar"
@@ -1917,6 +1976,19 @@ async function handleAdminManagerAction(event) {
 
   if (action === "edit") {
     loadProjectInEditor(projectKey);
+    return;
+  }
+
+  if (action === "visit") {
+    const projectUrl = String(projects[index].url || "").trim();
+    if (!isHttpUrl(projectUrl)) {
+      setAdminManagerFeedback(
+        "Este projeto ainda não possui uma URL publicada válida.",
+      );
+      return;
+    }
+
+    window.open(projectUrl, "_blank", "noopener,noreferrer");
     return;
   }
 
@@ -2636,6 +2708,27 @@ async function setupSupabaseAdminPanel() {
     });
   }
 
+  if (supabaseSyncViewsButton) {
+    supabaseSyncViewsButton.addEventListener("click", async () => {
+      if (!isAuthorizedAdmin || !hasAdminSession()) {
+        setSupabaseStatus("Entre no Admin para atualizar as visualizacoes.");
+        return;
+      }
+
+      if (!supabaseSyncViewsInput?.checked) {
+        setSupabaseStatus("Confirme o input para atualizar desktop e mobile.");
+        return;
+      }
+
+      await renderPortfolio();
+      renderAdminProjectManager();
+      portfolioSyncChannel?.postMessage({ type: "portfolio-updated" });
+      setSupabaseStatus(
+        "Visualizacoes desktop e mobile atualizadas no modo local.",
+      );
+    });
+  }
+
   if (supabaseDisconnectButton) {
     supabaseDisconnectButton.addEventListener("click", async () => {
       const client = getSupabaseClient();
@@ -2817,12 +2910,29 @@ function createProjectCard(project) {
     String(project.description || "").trim() ||
     buildDescriptionFromType(project.type);
   const legendText = buildPortfolioLegend(project);
+  const rawProjectUrl = String(project.url || "").trim();
+  const hasValidProjectUrl = isHttpUrl(rawProjectUrl);
 
   legend.textContent = legendText;
   description.textContent =
     normalizeAscii(baseDescription) === normalizeAscii(legendText)
       ? buildDescriptionFromType(project.type)
       : baseDescription;
+
+  const projectLink = document.createElement("a");
+  projectLink.className = "portfolio-project-link";
+  projectLink.textContent = "Ver Projeto";
+
+  if (hasValidProjectUrl) {
+    projectLink.href = rawProjectUrl;
+    projectLink.target = "_blank";
+    projectLink.rel = "noreferrer";
+  } else {
+    projectLink.classList.add("is-disabled");
+    projectLink.href = "#";
+    projectLink.setAttribute("aria-disabled", "true");
+    projectLink.tabIndex = -1;
+  }
 
   titleRow.appendChild(title);
   card.appendChild(cover);
@@ -2832,6 +2942,7 @@ function createProjectCard(project) {
   }
   card.appendChild(legend);
   card.appendChild(description);
+  card.appendChild(projectLink);
   return card;
 }
 
@@ -2840,7 +2951,7 @@ function setupPortfolioMarquee() {
     return;
   }
 
-  portfolioGrid.classList.remove("is-marquee");
+  portfolioGrid.classList.remove("is-marquee", "is-mobile-carousel");
   portfolioGrid.style.removeProperty("--marquee-duration");
 
   portfolioGrid.querySelectorAll(".project-card.is-clone").forEach((clone) => {
@@ -2851,14 +2962,6 @@ function setupPortfolioMarquee() {
   const marqueeButtons = Array.from(
     document.querySelectorAll("[data-portfolio-marquee]"),
   );
-  const shouldUseStaticGrid = window.matchMedia("(max-width: 820px)").matches;
-
-  if (shouldUseStaticGrid) {
-    marqueeButtons.forEach((button) => {
-      button.disabled = true;
-    });
-    return;
-  }
 
   if (originals.length < 2) {
     marqueeButtons.forEach((button) => {
@@ -2925,7 +3028,8 @@ function setupPortfolioMarqueeControls() {
 
     button.dataset.marqueeBound = "1";
     button.addEventListener("click", () => {
-      boost(String(button.dataset.portfolioMarquee || "next"));
+      const direction = String(button.dataset.portfolioMarquee || "next");
+      boost(direction);
     });
   });
 }
@@ -2960,7 +3064,14 @@ async function renderPortfolio() {
     renderPortfolioCards(projects);
   };
 
-  composeAndRender(getPublishedProjects(getStoredProjects()));
+  const storedProjects = getStoredProjects();
+  const publishedStoredProjects = getPublishedProjects(storedProjects);
+  const fallbackProjects =
+    publishedStoredProjects.length > 0
+      ? publishedStoredProjects
+      : getPublishedProjects(defaultProjects);
+
+  composeAndRender(fallbackProjects);
 }
 
 function updateRecommendation() {
@@ -3499,14 +3610,10 @@ async function handleAdminSubmit(event) {
   const providedDescription = adminDescription.value.trim();
   const url = normalizeUrl(rawUrl);
   const order = Number(adminOrder?.value || "");
-  const statusValue = String(adminStatus?.value || "published");
   const submitMode = String(
     event.submitter?.dataset?.submitMode || "save-publish",
   );
-  const shouldPublish =
-    submitMode === "publish" ||
-    submitMode === "save-publish" ||
-    statusValue === "published";
+  const shouldPublish = submitMode === "save-publish";
   const coverUrl = buildAutoCoverFromUrl(url);
 
   const type = providedType || (url ? inferProjectTypeFromUrl(url) : "");
@@ -3570,15 +3677,9 @@ async function handleAdminSubmit(event) {
       return;
     }
 
-    const previous = projects[editIndex];
     projects[editIndex] = {
       ...draftProject,
-      is_published:
-        submitMode === "save"
-          ? statusValue === "published"
-          : submitMode === "publish" || submitMode === "save-publish"
-            ? true
-            : previous.is_published !== false,
+      is_published: shouldPublish,
     };
     saveProjects(projects);
     saveProjectCover(draftProject, finalCoverUrl);
@@ -3640,6 +3741,15 @@ async function handleAdminSubmit(event) {
 }
 
 function setupCrossTabSiteSync() {
+  portfolioSyncChannel?.addEventListener("message", async (event) => {
+    if (event.data?.type !== "portfolio-updated") {
+      return;
+    }
+
+    await renderPortfolio();
+    renderAdminProjectManager();
+  });
+
   window.addEventListener("storage", async (event) => {
     if (!event.key) {
       return;
@@ -3690,8 +3800,16 @@ function setupMenu() {
 function setupReveal() {
   const revealBlocks = document.querySelectorAll(".section-reveal");
 
+  if (!revealBlocks.length) {
+    return;
+  }
+
+  const revealItem = (item) => {
+    item.classList.add("visible");
+  };
+
   if (!("IntersectionObserver" in window)) {
-    revealBlocks.forEach((item) => item.classList.add("visible"));
+    revealBlocks.forEach(revealItem);
     return;
   }
 
@@ -3699,15 +3817,16 @@ function setupReveal() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
+          revealItem(entry.target);
           observer.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.18 },
+    { threshold: 0.12 },
   );
 
   revealBlocks.forEach((item) => observer.observe(item));
+  revealBlocks.forEach(revealItem);
 }
 
 function setupFloatingIconsBySection() {
@@ -4094,7 +4213,6 @@ if (connectNetlifyButton) {
   });
 }
 
-setupMenu();
 setupUrgentBarTyping();
 setupAboutHeadlineTyping();
 setupReveal();
@@ -4103,3 +4221,63 @@ setupInputRedirects();
 setupKeyboardShortcuts();
 setupCrossTabSiteSync();
 setupAdminPanelLocal();
+
+function setupReviewCarousel() {
+  const reviewCarousel = document.querySelector(".google-reviews");
+  const reviewCards = Array.from(
+    reviewCarousel?.querySelectorAll("blockquote") || [],
+  );
+
+  if (!reviewCarousel || reviewCards.length < 2) {
+    return;
+  }
+
+  const updateCarouselHeight = () => {
+    reviewCarousel.style.minHeight = "";
+    reviewCards.forEach((card) => card.classList.add("is-review-measuring"));
+    const tallestCard = Math.max(
+      ...reviewCards.map((card) => card.getBoundingClientRect().height),
+    );
+    reviewCards.forEach((card) => card.classList.remove("is-review-measuring"));
+    reviewCarousel.style.minHeight = `${Math.ceil(tallestCard)}px`;
+  };
+
+  let currentReview = 0;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  reviewCarousel.classList.add("is-review-carousel");
+  reviewCards[currentReview].classList.add("is-review-active");
+  updateCarouselHeight();
+
+  window.addEventListener("resize", updateCarouselHeight);
+
+  if (prefersReducedMotion) {
+    return;
+  }
+
+  let reviewTimer;
+  const showNextReview = () => {
+    reviewCards[currentReview].classList.remove("is-review-active");
+    currentReview = (currentReview + 1) % reviewCards.length;
+    reviewCards[currentReview].classList.add("is-review-active");
+  };
+
+  const startRotation = () => {
+    window.clearInterval(reviewTimer);
+    reviewTimer = window.setInterval(showNextReview, 6000);
+  };
+
+  const pauseRotation = () => {
+    window.clearInterval(reviewTimer);
+    reviewTimer = undefined;
+  };
+
+  reviewCarousel.addEventListener("mouseenter", pauseRotation);
+  reviewCarousel.addEventListener("mouseleave", startRotation);
+  reviewCarousel.addEventListener("focusin", pauseRotation);
+  reviewCarousel.addEventListener("focusout", startRotation);
+  startRotation();
+}
+
+setupReviewCarousel();

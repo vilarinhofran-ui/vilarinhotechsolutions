@@ -461,6 +461,41 @@
         font-size: 0.78rem;
       }
 
+      .pf-project-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        margin-top: 4px;
+        padding: 8px 12px;
+        border: 1px solid color-mix(in srgb, var(--brand) 64%, var(--line) 36%);
+        border-radius: 999px;
+        background: linear-gradient(135deg, #1f72ff, #00b7ff);
+        color: #f8fbff;
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          border-color 0.2s ease;
+      }
+
+      .pf-project-link:hover,
+      .pf-project-link:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(31, 114, 255, 0.24);
+        border-color: #66b7ff;
+        outline: none;
+      }
+
+      .pf-project-link.is-disabled {
+        opacity: 0.72;
+        cursor: default;
+        pointer-events: none;
+      }
+
       .pf-empty {
         border: 1px dashed color-mix(in srgb, var(--line) 72%, #73afff 28%);
         border-radius: 14px;
@@ -1059,11 +1094,30 @@
             ? "Em planejamento"
             : "Projeto publicado";
 
+        const projectLink = document.createElement("a");
+        projectLink.className = "pf-project-link";
+        projectLink.textContent = "Ver Projeto";
+
+        const rawProjectUrl = String(project.url || "").trim();
+        const hasValidProjectUrl = /^https?:\/\//i.test(rawProjectUrl);
+
+        if (hasValidProjectUrl) {
+          projectLink.href = rawProjectUrl;
+          projectLink.target = "_blank";
+          projectLink.rel = "noreferrer";
+        } else {
+          projectLink.classList.add("is-disabled");
+          projectLink.href = "#";
+          projectLink.setAttribute("aria-disabled", "true");
+          projectLink.tabIndex = -1;
+        }
+
         body.appendChild(title);
         body.appendChild(pill);
         body.appendChild(desc);
         footer.appendChild(publicStatus);
         body.appendChild(footer);
+        body.appendChild(projectLink);
         coverWrap.appendChild(img);
         wrapper.appendChild(coverWrap);
         wrapper.appendChild(body);

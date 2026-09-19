@@ -1106,7 +1106,7 @@ function buildWhatsappStructuredMessage(context = {}) {
 
 function openWhatsappWithMessage(messageText) {
   const encodedMessage = encodeURIComponent(messageText);
-  const url = `https://wa.me/5541991443794?text=${encodedMessage}`;
+  const url = `https://wa.me/5541987039711?text=${encodedMessage}`;
   window.open(url, "_blank", "noopener,noreferrer");
 }
 
@@ -3125,7 +3125,7 @@ function updateRecommendation() {
     }
     setAiSuggestionDecision("idle");
     if (ctaWhatsapp) {
-      ctaWhatsapp.href = "https://wa.me/5541991443794";
+      ctaWhatsapp.href = "https://wa.me/5541987039711";
     }
     return;
   }
@@ -3234,7 +3234,7 @@ function updateRecommendation() {
     ranking: suggestedRank,
   });
   if (ctaWhatsapp) {
-    ctaWhatsapp.href = `https://wa.me/5541991443794?text=${encodeURIComponent(message)}`;
+    ctaWhatsapp.href = `https://wa.me/5541987039711?text=${encodeURIComponent(message)}`;
   }
 }
 

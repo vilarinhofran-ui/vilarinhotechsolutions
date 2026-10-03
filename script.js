@@ -68,7 +68,9 @@ const aiChooseOtherButton = document.getElementById("ai-choose-other");
 const aiSuggestionText = document.getElementById("ai-suggestion-text");
 const aiDecisionFeedback = document.getElementById("ai-decision-feedback");
 const serviceRequestButtons = Array.from(
-  document.querySelectorAll(".template-card .btn"),
+  document.querySelectorAll(
+    ".template-card .btn:not(.diagnostic-digital-link)",
+  ),
 );
 const contactForm = document.querySelector("#contato .contact-form");
 const contactSubmitButton = contactForm?.querySelector("button.btn");
